@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+| Smart Green City palette and typography (SRS 9.3 / 9.4).
+| Official GreenExE 4.0 and NSBM branding overrides these values.
+*/
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-display: 'Poppins', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-deep-green: #073b2a;
+    --color-forest-green: #0b5d3b;
+    --color-smart-green: #2e8b57;
+    --color-fresh-green: #6bcb77;
+    --color-eco-lime: #b7e66a;
+    --color-cyan-tech: #35d0c8;
+    --color-dark-navy: #071a24;
+    --color-light-gray: #eaf2ee;
+}
+
+@layer base {
+    body {
+        @apply bg-dark-navy text-light-gray font-sans antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-display;
+    }
+}
+
+/* Glassmorphism card (SRS 9.2) */
+@utility gx-card {
+    @apply rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md;
+}
+
+@utility gx-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition;
+}
+
+@utility gx-btn-primary {
+    @apply gx-btn bg-smart-green text-white hover:bg-fresh-green hover:text-deep-green;
+}
+
+@utility gx-btn-ghost {
+    @apply gx-btn border border-white/20 text-light-gray hover:border-cyan-tech hover:text-cyan-tech;
+}
+
+@utility gx-label {
+    @apply mb-1 block text-sm font-medium text-light-gray/80;
+}
+
+@utility gx-input {
+    @apply w-full rounded-lg border border-white/10 bg-dark-navy/60 px-4 py-2.5 text-light-gray
+           placeholder-light-gray/30 outline-none transition focus:border-cyan-tech focus:ring-1 focus:ring-cyan-tech;
+}
+
+@utility gx-error {
+    @apply mt-1 text-sm text-red-300;
+}
+
+@utility gx-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+/* Subtle animated smart-city grid background (SRS 9.2) */
+.gx-grid-bg {
+    background-image:
+        linear-gradient(rgba(53, 208, 200, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53, 208, 200, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    animation: gx-grid-drift 24s linear infinite;
+}
+
+@keyframes gx-grid-drift {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 56px 56px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-grid-bg {
+        animation: none;
+    }
+}
