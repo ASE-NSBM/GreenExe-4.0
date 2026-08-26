@@ -1,4 +1,6 @@
-<footer class="mt-24 border-t border-white/10 bg-deep-green/30">
+{{-- On the home page the footer is the last stop of the slide stack, so it
+     follows the final panel directly instead of sitting after a margin. --}}
+<footer class="snap-start border-t border-white/10 bg-deep-green/30 {{ request()->routeIs('home') ? '' : 'mt-24' }}">
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-3">
         <div>
             <h3 class="font-display text-lg font-semibold text-white">{{ config('greenexe.event.name') }}</h3>

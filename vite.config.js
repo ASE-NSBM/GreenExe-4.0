@@ -16,6 +16,11 @@ export default defineConfig({
                 bunny('Poppins', {
                     weights: [500, 600, 700],
                 }),
+                // Display accent on the hero headline and wordmark — italic only.
+                bunny('Playfair Display', {
+                    weights: [400, 500, 600],
+                    styles: ['italic'],
+                }),
             ],
         }),
         tailwindcss(),

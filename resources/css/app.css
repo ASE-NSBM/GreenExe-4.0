@@ -90,3 +90,187 @@
         animation: none;
     }
 }
+
+/*
+| Playfair Display is served italic-only: it is used purely as the display
+| accent on the hero wordmark and headline (SRS 9.4 keeps Inter for body copy).
+*/
+.font-playfair {
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
+}
+
+/* Hero load choreography -------------------------------------------------- */
+@keyframes heroReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(28px);
+        filter: blur(12px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes heroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroZoom {
+    0% {
+        transform: scale(1.12);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.hero-anim {
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-reveal {
+    animation-name: heroReveal;
+    animation-duration: 1.1s;
+}
+
+.hero-fade {
+    animation-name: heroFadeUp;
+    animation-duration: 1s;
+}
+
+.hero-zoom {
+    animation: heroZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-anim,
+    .hero-zoom {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/*
+| Full-page slide stack.
+|
+| Every panel is sticky at the top of the viewport, so the panel that follows
+| scrolls up and covers the one before it instead of pushing it away. Panels
+| must therefore be opaque, or the pinned panel underneath shows through.
+|
+| Snap stops live on a separate rail of static blocks rather than on the panels
+| themselves: a stuck panel is permanently aligned with the top of the viewport,
+| so mandatory snapping against it can trap the scroll position.
+|
+| Below md the stack is switched off — nine highlight cards do not fit in a
+| phone viewport — and the panels fall back to ordinary full-height blocks.
+*/
+.gx-panel {
+    min-height: 100dvh;
+}
+
+.gx-snap-rail {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .gx-stack-root {
+        scroll-snap-type: y mandatory;
+    }
+
+    .gx-stack {
+        position: relative;
+    }
+
+    .gx-panel {
+        position: sticky;
+        top: 0;
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .gx-snap-rail {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .gx-snap-stop {
+        height: 100dvh;
+        scroll-snap-align: start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-stack-root {
+        scroll-snap-type: none;
+    }
+}
+
+/*
+| Scroll reveal. Panels below the fold are off screen when the load animations
+| run, so their content fades in when the panel is scrolled into view instead.
+*/
+.gx-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gx-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Horizontal highlight track ---------------------------------------------- */
+.gx-track {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* The track scrolls sideways inside a vertically snapped panel, so keep the
+       browser from chaining an overscroll into the panel behind it. */
+    overscroll-behavior-x: contain;
+}
+
+.gx-track::-webkit-scrollbar {
+    display: none;
+}
+
+.gx-slide {
+    width: min(85vw, 22rem);
+}
+
+@media (min-width: 768px) {
+    .gx-slide {
+        width: 24rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-track {
+        scroll-behavior: auto;
+    }
+}

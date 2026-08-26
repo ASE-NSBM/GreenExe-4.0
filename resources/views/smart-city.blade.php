@@ -32,10 +32,27 @@
         <h2 class="mt-20 font-display text-3xl font-semibold text-white">City pillars</h2>
         <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @forelse ($pillars as $pillar)
+                @php
+                    // Stored as a lead sentence followed by one point per line.
+                    $lines = preg_split('/\R+/', trim($pillar->description));
+                    $lead = array_shift($lines);
+                @endphp
+
                 <article class="gx-card transition hover:border-cyan-tech/40">
                     <div class="text-2xl">{{ $pillar->icon ?? '⚡' }}</div>
                     <h3 class="mt-4 font-display text-lg font-semibold text-white">{{ $pillar->title }}</h3>
-                    <p class="mt-2 text-sm text-light-gray/70">{{ $pillar->description }}</p>
+                    <p class="mt-2 text-sm text-light-gray/70">{{ $lead }}</p>
+
+                    @if ($lines)
+                        <ul class="mt-3 space-y-1.5 border-t border-white/10 pt-3 text-sm text-light-gray/70">
+                            @foreach ($lines as $line)
+                                <li class="flex gap-2">
+                                    <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-fresh-green"></span>
+                                    <span>{{ $line }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </article>
             @empty
                 <p class="col-span-full text-light-gray/60">Smart city pillars will be published soon.</p>
