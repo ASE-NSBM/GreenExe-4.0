@@ -22,14 +22,40 @@ return [
     ],
 
     'contact' => [
-        'email' => env('GREENEXE_CONTACT_EMAIL', 'greenexe@ase.example'),
-        'phone' => env('GREENEXE_CONTACT_PHONE', '+94 00 000 0000'),
+        'email' => env('GREENEXE_CONTACT_EMAIL', 'ase@nsbm.ac.lk'),
+        'phone' => env('GREENEXE_CONTACT_PHONE', '+94 71 872 9888'),
         'address' => 'NSBM Green University, Mahenwatta, Pitipana, Homagama, Sri Lanka',
+        'map_url' => env('GREENEXE_MAP_URL', 'https://maps.google.com/?q=NSBM+Green+University'),
+        'website' => env('GREENEXE_WEBSITE_URL', 'https://asensbm.live'),
+        // Order here is the order the icons appear. Only verified, active
+
         'socials' => [
-            'facebook' => env('GREENEXE_FACEBOOK_URL', '#'),
-            'instagram' => env('GREENEXE_INSTAGRAM_URL', '#'),
-            'linkedin' => env('GREENEXE_LINKEDIN_URL', '#'),
+            'linkedin' => env('GREENEXE_LINKEDIN_URL', 'https://www.linkedin.com/company/asensbm'),
+            'facebook' => env('GREENEXE_FACEBOOK_URL', 'https://www.facebook.com/ase.nsbm/'),
+            'instagram' => env('GREENEXE_INSTAGRAM_URL', 'https://www.instagram.com/ase.nsbm/'),
         ],
+    ],
+
+
+    'organizer' => [
+        'short_name' => 'ASE',
+        'name' => 'Association of Software Engineering',
+        'summary' => 'The official student body representing Software Engineering undergraduates at NSBM Green University.',
+        'tagline' => 'Empowering innovation through technology and community.',
+        'vision' => 'To be the leading student organization that nurtures innovation and technical excellence among Software Engineering undergraduates.',
+        'mission' => 'To create an inclusive community that bridges academia and industry through meaningful events, workshops, and competitions.',
+        'why' => 'A competition turns ideas into working solutions. GreenExE gives student teams a real problem, teammates to solve it with, and a deadline that pushes the work past the classroom.',
+        'affiliation' => 'NSBM Green University',
+        /*
+        | Organizer statistics. Left empty on purpose: show a number only once
+        | ASE confirms it (SRS 18). Each entry is ['value' => '500+', 'label' => 'Members'].
+        | The stats row is hidden while this array is empty.
+        */
+        'stats' => array_values(array_filter([
+            // ['value' => '500+', 'label' => 'Members'],
+            // ['value' => '20+', 'label' => 'Events'],
+            // ['value' => '2015', 'label' => 'Founded'],
+        ])),
     ],
 
     // Team-size limits must be confirmed by organisers before production.
