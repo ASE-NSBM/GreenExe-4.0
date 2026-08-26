@@ -62,6 +62,21 @@ class StoreRegistrationRequest extends FormRequest
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'members.*.full_name' => 'full name',
+            'members.*.student_id' => 'student ID',
+            'members.*.email' => 'email',
+            'members.*.contact_number' => 'contact number',
+            'members.*.whatsapp_number' => 'WhatsApp number',
+            'members.*.institution' => 'institution',
+        ];
+    }
+
+    /**
      * Duplicate-registration rules (FR-35): a student ID or email may only be
      * used once inside a team, and once across the whole competition.
      */

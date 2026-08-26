@@ -73,7 +73,10 @@ class RegistrationTest extends TestCase
         $payload['members'][0]['email'] = 'not-an-email';
 
         $this->post(route('register.store'), $payload)
-            ->assertSessionHasErrors(['team_name', 'members.0.email']);
+            ->assertSessionHasErrors(['team_name', 'members.0.email'])
+            ->followRedirects()
+            ->assertSee('The email field must be a valid email address.')
+            ->assertDontSee('members.0');
 
         $this->assertSame(0, Registration::count());
     }
