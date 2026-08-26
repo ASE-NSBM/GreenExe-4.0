@@ -221,6 +221,27 @@
 }
 
 /*
+| A panel that outgrows the viewport — the closing panel once the registration
+| form is in it. It still slides up over the pinned panel before it, but then
+| scrolls normally instead of being clipped to one screen. Its snap area is
+| taller than the snapport, so mandatory snapping lets the scroll rest anywhere
+| inside it.
+*/
+.gx-panel-flow {
+    min-height: 100dvh;
+}
+
+@media (min-width: 768px) {
+    .gx-panel-flow {
+        position: relative;
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+        scroll-snap-align: start;
+    }
+}
+
+/*
 | Scroll reveal. Panels below the fold are off screen when the load animations
 | run, so their content fades in when the panel is scrolled into view instead.
 */
@@ -245,10 +266,13 @@
     }
 }
 
-/* Horizontal highlight track ---------------------------------------------- */
+/* Horizontal highlight track ----------------------------------------------
+|
+| Netflix-style row: free horizontal scrolling (no snap, so the pointer-driven
+| auto-scroll is not fought by snap points), the hovered card lifts while its
+| neighbours dim, and each card carries a ghost rank numeral.
+*/
 .gx-track {
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     scrollbar-width: none;
     /* The track scrolls sideways inside a vertically snapped panel, so keep the
        browser from chaining an overscroll into the panel behind it. */
@@ -261,6 +285,9 @@
 
 .gx-slide {
     width: min(85vw, 22rem);
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (min-width: 768px) {
@@ -269,8 +296,57 @@
     }
 }
 
+/* Ghost rank numeral, sitting behind the card copy. */
+.gx-rank {
+    position: absolute;
+    right: 0.5rem;
+    bottom: -0.75rem;
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
+    font-style: italic;
+    font-size: 9rem;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+    pointer-events: none;
+    transition: -webkit-text-stroke-color 0.4s ease;
+}
+
+@media (hover: hover) {
+    .gx-track .gx-slide:hover {
+        opacity: 1;
+        transform: scale(1.03);
+        z-index: 10;
+    }
+
+    .gx-slide:hover .gx-rank {
+        -webkit-text-stroke-color: rgba(53, 208, 200, 0.55);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .gx-track {
-        scroll-behavior: auto;
+    .gx-slide {
+        transition: none;
+    }
+
+    .gx-track .gx-slide:hover {
+        transform: none;
+    }
+}
+
+/* Oversized icon watermark, used by slides that have no photograph yet. */
+.gx-watermark {
+    position: absolute;
+    top: -1.5rem;
+    left: -1rem;
+    font-size: 11rem;
+    line-height: 1;
+    opacity: 0.12;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+@media (hover: hover) {
+    .gx-slide:hover .gx-watermark {
+        opacity: 0.2;
     }
 }

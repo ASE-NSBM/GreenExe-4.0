@@ -8,21 +8,20 @@
         <h1 class="font-display text-4xl font-bold text-white">Organizer</h1>
 
         <div class="mt-10 grid gap-6 md:grid-cols-2">
-            <article class="gx-card">
-                <h2 class="font-display text-xl font-semibold text-white">{{ config('greenexe.event.organizer') }}</h2>
-                <p class="mt-3 text-light-gray/75">
-                    The Association of Software Engineering is the student community behind
-                    {{ config('greenexe.event.name') }} at {{ config('greenexe.event.university') }}.
-                </p>
-            </article>
-
-            <article class="gx-card border-cyan-tech/30">
-                <h2 class="font-display text-xl font-semibold text-white">{{ config('greenexe.event.brand') }}</h2>
-                <p class="mt-3 text-light-gray/75">
-                    {{ config('greenexe.event.brand') }} is the official brand identity for the
-                    {{ config('greenexe.event.name') }} event series.
-                </p>
-            </article>
+            @forelse ($blocks as $block)
+                <article class="gx-card @if ($loop->first) border-cyan-tech/30 @endif">
+                    <h2 class="font-display text-xl font-semibold text-white">{{ $block->title }}</h2>
+                    <p class="mt-3 whitespace-pre-line text-light-gray/75">{{ $block->body }}</p>
+                </article>
+            @empty
+                <article class="gx-card md:col-span-2">
+                    <h2 class="font-display text-xl font-semibold text-white">{{ config('greenexe.event.organizer') }}</h2>
+                    <p class="mt-3 text-light-gray/75">
+                        The Association of Software Engineering is the student community behind
+                        {{ config('greenexe.event.name') }} at {{ config('greenexe.event.university') }}.
+                    </p>
+                </article>
+            @endforelse
         </div>
 
         <div class="mt-6 gx-card">

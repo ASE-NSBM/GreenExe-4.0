@@ -22,6 +22,8 @@ class CompetitionInformationSeeder extends Seeder
             ['project_requirements', 'Project requirements', 'Projects must address the Smart Green City concept and describe a problem, a proposed solution, the technology used, the innovation and the expected impact.'],
             ['submission', 'Submission and presentation', 'Submission and presentation requirements are confirmed by the organisers before the competition begins.'],
             ['rules', 'Rules and disqualification', 'Incomplete, duplicated or misrepresented registrations may be disqualified. Final rules are published by the organisers.'],
+            ['organizer', 'Association of Software Engineering (ASE)', 'The Association of Software Engineering is the student community behind GreenExE at NSBM Green University.'],
+            ['organizer', 'About the event series', 'GreenExE brings student teams together to build technology for a sustainable campus, and returns each year with a new theme.'],
         ];
 
         foreach ($sections as $index => [$section, $title, $body]) {

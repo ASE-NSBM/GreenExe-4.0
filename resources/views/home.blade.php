@@ -9,8 +9,9 @@
          up and takes it over. Panels are opaque for that reason. --}}
     <div class="gx-stack">
         {{-- Snap stops, kept off the pinned panels themselves. --}}
+        {{-- One stop per pinned panel. The closing panel is taller than the
+             viewport and carries its own snap alignment. --}}
         <div class="gx-snap-rail" aria-hidden="true">
-            <div class="gx-snap-stop"></div>
             <div class="gx-snap-stop"></div>
             <div class="gx-snap-stop"></div>
             <div class="gx-snap-stop"></div>
@@ -189,12 +190,25 @@
 
     {{-- Smart Green City highlights (FR-6) --}}
     <section class="gx-panel relative flex w-full flex-col overflow-hidden bg-dark-navy tracking-[-0.02em]">
-        <div class="absolute inset-0 bg-gradient-to-b from-deep-green/50 via-dark-navy to-dark-navy" aria-hidden="true"></div>
+        {{-- Ambient background loop. The panel is exactly one viewport tall and
+             clips its overflow, so the video simply fills it; the scrim keeps the
+             headline, controls and cards readable over the moving footage. --}}
+        <video class="absolute inset-0 h-full w-full object-cover"
+               autoplay muted loop playsinline preload="metadata"
+               poster="{{ asset('assets/video/smart-city-highlights-poster.jpg') }}"
+               aria-hidden="true" tabindex="-1" data-ambient-video>
+            <source src="{{ asset('assets/video/smart-city-highlights.webm') }}" type="video/webm">
+            <source src="{{ asset('assets/video/smart-city-highlights.mp4') }}" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-navy/70 via-dark-navy/85 to-dark-navy/95" aria-hidden="true"></div>
 
         <div class="relative flex w-full flex-1 flex-col pt-24 pb-10 md:pt-28 md:pb-14">
             <div class="gx-reveal flex flex-wrap items-end justify-between gap-4 px-6 sm:px-10 md:px-14" data-reveal>
                 <div>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">Nine pillars</p>
+                    <p id="carousel-hint" class="sr-only">
+                        Use the arrow keys, or the previous and next buttons, to move through the pillars.
+                    </p>
                     <h2 class="mt-3 leading-[0.95] text-white">
                         <span class="block font-playfair text-4xl font-normal italic sm:text-5xl md:text-6xl"
                               style="letter-spacing: -0.05em">Smart Green</span>
@@ -229,29 +243,50 @@
             {{-- Horizontal track: native scrolling, so wheel, trackpad, touch and
                  keyboard all work; the buttons only nudge scrollLeft. --}}
             <div class="gx-track mt-8 flex flex-1 gap-4 overflow-x-auto px-6 pb-4 sm:px-10 md:mt-10 md:gap-6 md:px-14"
-                 tabindex="0" role="group" aria-label="Smart Green City pillars" data-carousel-track>
+                 tabindex="0" role="group"
+                 aria-label="Smart Green City pillars, scrollable"
+                 aria-describedby="carousel-hint"
+                 data-carousel-track>
+                @php
+                    // Until every pillar has a photograph, each slide gets its own
+                    // duotone so the row does not read as nine identical cards.
+                    $tints = [
+                        'from-forest-green via-deep-green to-dark-navy',
+                        'from-smart-green/80 via-forest-green to-dark-navy',
+                        'from-eco-lime/40 via-smart-green/60 to-dark-navy',
+                        'from-cyan-tech/40 via-forest-green to-dark-navy',
+                        'from-cyan-tech/30 via-deep-green to-dark-navy',
+                        'from-fresh-green/40 via-forest-green to-dark-navy',
+                        'from-cyan-tech/45 via-smart-green/50 to-dark-navy',
+                        'from-deep-green via-forest-green/80 to-dark-navy',
+                        'from-eco-lime/30 via-cyan-tech/30 to-dark-navy',
+                    ];
+                @endphp
+
                 @forelse ($highlights as $index => $highlight)
                     @php
                         $lines = preg_split('/\R+/', trim($highlight->description));
                         $lead = array_shift($lines);
+                        $tint = $tints[$index % count($tints)];
                     @endphp
 
-                    <article class="gx-slide group relative flex shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                    <article class="gx-slide group relative flex shrink-0 flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-white/5"
                              data-carousel-slide>
                         @if ($highlight->image)
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                                  style="background-image: url('{{ $highlight->image }}')" aria-hidden="true"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/85 to-dark-navy/30" aria-hidden="true"></div>
                         @else
-                            <div class="absolute inset-0 bg-gradient-to-br from-deep-green/70 via-dark-navy to-dark-navy" aria-hidden="true"></div>
-                            <div class="absolute inset-0 opacity-40 gx-grid-bg" aria-hidden="true"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br {{ $tint }}" aria-hidden="true"></div>
+                            <div class="gx-grid-bg absolute inset-0 opacity-30" aria-hidden="true"></div>
+                            <span class="gx-watermark" aria-hidden="true">{{ $highlight->icon ?? '🌿' }}</span>
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/40 to-transparent" aria-hidden="true"></div>
                         @endif
 
+                        <span class="gx-rank" aria-hidden="true">{{ $index + 1 }}</span>
+
                         <div class="relative flex h-full flex-col p-6 md:p-8">
-                            <div class="flex items-baseline gap-3">
-                                <span class="font-playfair text-sm italic text-cyan-tech/80">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                <span class="text-2xl">{{ $highlight->icon ?? '🌿' }}</span>
-                            </div>
+                            <span class="text-2xl">{{ $highlight->icon ?? '🌿' }}</span>
 
                             <h3 class="mt-auto text-xl font-medium leading-tight text-white md:text-2xl"
                                 style="letter-spacing: -0.04em">
@@ -279,19 +314,80 @@
         </div>
     </section>
 
-    {{-- Closing call to action --}}
-    <section class="gx-panel relative flex w-full items-center overflow-hidden bg-dark-navy">
-        <div class="absolute inset-0 bg-gradient-to-b from-dark-navy via-deep-green/40 to-dark-navy" aria-hidden="true"></div>
+    {{-- Closing call to action and registration (FR-23 to FR-38) --}}
+    <section id="register"
+             class="gx-panel gx-panel-flow relative flex w-full flex-col bg-dark-navy tracking-[-0.02em]">
+        {{-- The panel is taller than the viewport once the form is in it, so the
+             video is pinned inside it rather than stretched over its full height. --}}
+        <div class="absolute inset-0" aria-hidden="true">
+            <div class="sticky top-0 h-[100dvh] w-full overflow-hidden">
+                <video class="h-full w-full object-cover"
+                       autoplay muted loop playsinline preload="metadata"
+                       poster="{{ asset('assets/video/ready-to-compete-poster.jpg') }}"
+                       tabindex="-1" data-ambient-video>
+                    <source src="{{ asset('assets/video/ready-to-compete.webm') }}" type="video/webm">
+                    <source src="{{ asset('assets/video/ready-to-compete.mp4') }}" type="video/mp4">
+                </video>
+                {{-- The form scrolls the full height of this panel, so the scrim
+                     stays heavy throughout rather than fading in one direction. --}}
+                <div class="absolute inset-0 bg-dark-navy/85"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-dark-navy/60 via-transparent to-dark-navy/70"></div>
+            </div>
+        </div>
 
-        <div class="relative mx-auto w-full max-w-5xl px-4 pt-20">
-            <div class="gx-card flex flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left">
-                <div>
-                    <h2 class="font-display text-2xl font-semibold text-white sm:text-3xl">Ready to compete?</h2>
-                    <p class="mt-2 text-light-gray/70">
-                        Teams of {{ config('greenexe.team.min_members') }}–{{ config('greenexe.team.max_members') }} members. Registration takes a few minutes.
-                    </p>
-                </div>
-                <a href="{{ route('register') }}" class="gx-btn-primary shrink-0">Register Now</a>
+        <div class="relative mx-auto w-full max-w-4xl px-6 pt-24 pb-16 sm:px-8 md:pt-28">
+
+            {{-- Intro, centred above the form --}}
+            <div class="gx-reveal text-center" data-reveal>
+                <p class="inline-flex items-center gap-2 rounded-full border border-cyan-tech/40 bg-cyan-tech/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">
+                    @if (config('greenexe.registration.open'))
+                        <span class="h-1.5 w-1.5 rounded-full bg-fresh-green"></span>
+                        Registration open
+                    @else
+                        <span class="h-1.5 w-1.5 rounded-full bg-red-400"></span>
+                        Registration closed
+                    @endif
+                </p>
+
+                <h2 class="mt-6 leading-[0.95] text-white">
+                    <span class="block font-playfair text-5xl font-normal italic sm:text-6xl"
+                          style="letter-spacing: -0.05em">Ready to</span>
+                    <span class="-mt-1 block text-5xl font-normal sm:text-6xl"
+                          style="letter-spacing: -0.08em">compete?</span>
+                </h2>
+
+                <p class="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-white/80 md:text-base">
+                    Teams of {{ config('greenexe.team.min_members') }}–{{ config('greenexe.team.max_members') }} members.
+                    Member 1 is the team leader.
+                    @if ($closesAt = config('greenexe.registration.closes_at'))
+                        Entries close on {{ \Illuminate\Support\Carbon::parse($closesAt)->format('j F Y') }}.
+                    @endif
+                </p>
+
+                <a href="{{ route('rules') }}"
+                   class="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-cyan-tech">
+                    Rules &amp; eligibility
+                    <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+                </a>
+            </div>
+
+            {{-- Form, in the same centred column --}}
+            <div class="mt-12">
+                @if (config('greenexe.registration.open'))
+                    @include('partials.registration-form')
+                @else
+                    <div class="gx-card bg-white/10 text-center">
+                        <h3 class="text-xl font-medium text-white" style="letter-spacing: -0.04em">
+                            Registration is closed
+                        </h3>
+                        <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/75">
+                            Entries are not being accepted at the moment. Check the
+                            <a href="{{ route('faq') }}" class="text-cyan-tech hover:underline">FAQ</a>
+                            or <a href="{{ route('contact') }}" class="text-cyan-tech hover:underline">contact the organisers</a>
+                            for the next round.
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

@@ -11,6 +11,15 @@ class SmartCityContent extends Model
 
     protected $table = 'smart_city_content';
 
+    /**
+     * @var array<string, string>
+     */
+    public const SECTIONS = [
+        'vision' => 'Vision (smart city)',
+        'pillar' => 'Pillar (smart city)',
+        'highlight' => 'Highlight (home carousel)',
+    ];
+
     protected $fillable = [
         'section',
         'title',

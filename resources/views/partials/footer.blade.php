@@ -6,7 +6,7 @@
             <h3 class="font-display text-lg font-semibold text-white">{{ config('greenexe.event.name') }}</h3>
             <p class="mt-3 text-sm text-light-gray/70">{{ config('greenexe.event.tagline') }}</p>
             <p class="mt-4 text-sm text-light-gray/70">
-                Organised by {{ config('greenexe.event.organizer') }} — {{ config('greenexe.event.brand') }}
+                Organised by {{ config('greenexe.event.organizer') }}
             </p>
         </div>
 
@@ -38,6 +38,6 @@
 
     <div class="border-t border-white/10 px-4 py-5 text-center text-xs text-light-gray/50">
         &copy; {{ date('Y') }} {{ config('greenexe.event.organizer') }}. {{ config('greenexe.event.university') }}.
-        <a href="{{ route('admin.login') }}" class="ml-2 hover:text-cyan-tech">Admin</a>
+        <a href="{{ route('filament.admin.auth.login') }}" class="ml-2 hover:text-cyan-tech">Admin</a>
     </div>
 </footer>

@@ -14,6 +14,7 @@ Built to the specification in `GreenExE_4.0_Full_SRS_Plan.docx`.
 | Database | Supabase PostgreSQL (SQLite for local dev) |
 | ORM | Eloquent |
 | Build | Vite + npm |
+| Admin | Filament v5 panel at `/admin` |
 | Auth | Laravel session auth + `admin` middleware |
 
 ## Getting started
@@ -67,9 +68,44 @@ variables and are never committed (SRS 8.2).
 **Public** — `/`, `/about`, `/smart-city`, `/competition`, `/rules`, `/faq`,
 `/organizer`, `/contact`, `GET|POST /register`, `/registration/success`
 
-**Admin** — `GET|POST /admin/login`, `/admin/dashboard`, `/admin/registrations`,
-`/admin/registrations/{id}` (`GET`/`PATCH`/`DELETE`), `/admin/export`,
-`/admin/faqs`, `/admin/content`, `POST /admin/logout`
+**Admin** — the Filament panel owns `/admin`:
+
+| Path | Purpose |
+|---|---|
+| `/admin/login`, `POST /admin/logout` | Panel authentication (FR-56, FR-57) |
+| `/admin` | Dashboard with summary widgets (FR-58) |
+| `/admin/registrations` | List, search, filter (FR-59 to FR-61) |
+| `/admin/registrations/{id}` | Full team and project details (FR-62, FR-63) |
+| `/admin/registrations/{id}/edit` | Edit team, project and status; manage members (FR-62 to FR-64) |
+| `/admin/export` | CSV export, one row per member (FR-66) |
+| `/admin/faqs` | Manage FAQs (FR-67) |
+| `/admin/competition-information` | Competition and organizer copy (FR-68, FR-70) |
+| `/admin/smart-city-contents` | Smart Green City copy (FR-69) |
+
+### How this maps to SRS 7.1
+
+The SRS route table predates the choice of Filament, which is Livewire-based and
+does not expose `PATCH`/`DELETE` endpoints per record — status changes, archiving
+and deletion are panel actions against the same models. Every requirement in
+Module 9 is covered; two documented paths are kept as redirects so the addresses
+in the SRS still resolve:
+
+| SRS 7.1 | Now |
+|---|---|
+| `GET /admin/dashboard` | redirects to `/admin` |
+| `GET/POST /admin/content` | redirects to `/admin/competition-information` |
+| `PATCH /admin/registrations/{id}` | "Set status" action (FR-64) |
+| `DELETE /admin/registrations/{id}` | "Archive" and "Delete" actions (FR-65) |
+| `GET /admin/export` | unchanged — a real streamed download |
+
+Registrations cannot be created from the panel; they only arrive through the
+public form. Team and project fields are editable there, with the same rules
+`StoreRegistrationRequest` applies, so a correction cannot store something the
+public form would have rejected. Members are managed in a relation manager on the
+view and edit pages: each one can be opened on its own, edited, added or removed.
+`member_count` follows the member list, and promoting a member to team leader
+demotes the previous one. Access is gated by `User::canAccessPanel()`, which reuses the same
+`isAdmin()` role check as the rest of the app (FR-71).
 
 ## Registration behaviour
 
@@ -84,8 +120,13 @@ variables and are never committed (SRS 8.2).
 
 Status values: `pending`, `reviewed`, `approved`, `rejected`, `archived`.
 Registrations can be searched (reference, team, project, member name/email/student ID),
-filtered by status and category, exported as CSV (one row per member),
-archived or deleted. FAQs and Smart Green City / competition copy are editable from `/admin/content`.
+filtered by status and category, exported as CSV (one row per member), archived or
+deleted. FAQs, competition copy, organizer details and Smart Green City content are
+edited as Filament resources.
+
+Filament publishes its own assets to `public/css/filament` and `public/js/filament`.
+After upgrading the package run `php artisan filament:upgrade` (already wired into
+`composer update` by the package).
 
 ## Security
 

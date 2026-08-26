@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminRegistrationController;
+use App\Http\Controllers\Admin\RegistrationExportController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
@@ -34,31 +33,19 @@ Route::get('/registration/success', [RegistrationController::class, 'success'])-
 |--------------------------------------------------------------------------
 | Admin routes (SRS 7.1)
 |--------------------------------------------------------------------------
+|
+| The administration area is the Filament panel registered by
+| App\Providers\Filament\AdminPanelProvider, which owns /admin and covers
+| FR-56 to FR-71. Only the CSV export stays a plain route: it streams a file
+| download, which is not something a Livewire page can return.
+|
 */
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AdminController::class, 'login'])
-        ->middleware('throttle:5,1') // Rate limiting for login (SRS 8.2)
-        ->name('login.attempt');
+Route::get('/admin/export', RegistrationExportController::class)
+    ->middleware('admin')
+    ->name('admin.registrations.export');
 
-    Route::middleware('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
-        Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('registrations.index');
-        Route::get('/export', [AdminRegistrationController::class, 'export'])->name('registrations.export');
-        Route::get('/registrations/{registration}', [AdminRegistrationController::class, 'show'])->name('registrations.show');
-        Route::patch('/registrations/{registration}', [AdminRegistrationController::class, 'update'])->name('registrations.update');
-        Route::delete('/registrations/{registration}', [AdminRegistrationController::class, 'destroy'])->name('registrations.destroy');
-
-        Route::get('/faqs', [AdminController::class, 'faqs'])->name('faqs.index');
-        Route::post('/faqs', [AdminController::class, 'storeFaq'])->name('faqs.store');
-        Route::patch('/faqs/{faq}', [AdminController::class, 'updateFaq'])->name('faqs.update');
-        Route::delete('/faqs/{faq}', [AdminController::class, 'destroyFaq'])->name('faqs.destroy');
-
-        Route::get('/content', [AdminController::class, 'content'])->name('content.index');
-        Route::post('/content', [AdminController::class, 'updateContent'])->name('content.update');
-
-        Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-    });
-});
+// SRS 7.1 names two paths that Filament exposes under different URLs. These
+// keep the documented addresses working.
+Route::redirect('/admin/dashboard', '/admin')->name('admin.dashboard');
+Route::redirect('/admin/content', '/admin/competition-information')->name('admin.content.index');
