@@ -78,6 +78,21 @@ class RegistrationTest extends TestCase
         $this->assertSame(0, Registration::count());
     }
 
+    public function test_invalid_phone_numbers_are_rejected(): void
+    {
+        $payload = $this->validPayload();
+        $payload['members'][0]['contact_number'] = '+94771234567';
+        $payload['members'][0]['whatsapp_number'] = '077123456';
+
+        $this->post(route('register.store'), $payload)
+            ->assertSessionHasErrors([
+                'members.0.contact_number',
+                'members.0.whatsapp_number',
+            ]);
+
+        $this->assertSame(0, Registration::count());
+    }
+
     public function test_declaration_must_be_accepted(): void
     {
         $payload = $this->validPayload();
