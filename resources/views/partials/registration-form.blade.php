@@ -121,14 +121,18 @@
                         <div>
                             <label class="gx-label" for="members_{{ $i }}_contact_number">Contact number <span class="text-red-300">*</span></label>
                             <input id="members_{{ $i }}_contact_number" name="members[{{ $i }}][contact_number]" type="tel"
-                                   class="gx-input" value="{{ old("members.$i.contact_number") }}" placeholder="0771234567">
+                                   class="gx-input" value="{{ old("members.$i.contact_number") }}" placeholder="0771234567"
+                                   inputmode="numeric" autocomplete="tel" required minlength="10" maxlength="10"
+                                   pattern="07[0-9]{8}">
                             @error("members.$i.contact_number") <p class="gx-error">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label class="gx-label" for="members_{{ $i }}_whatsapp_number">WhatsApp number <span class="text-red-300">*</span></label>
                             <input id="members_{{ $i }}_whatsapp_number" name="members[{{ $i }}][whatsapp_number]" type="tel"
-                                   class="gx-input" value="{{ old("members.$i.whatsapp_number") }}" placeholder="0771234567">
+                                   class="gx-input" value="{{ old("members.$i.whatsapp_number") }}" placeholder="0771234567"
+                                   inputmode="numeric" autocomplete="tel" required minlength="10" maxlength="10"
+                                   pattern="07[0-9]{8}">
                             @error("members.$i.whatsapp_number") <p class="gx-error">{{ $message }}</p> @enderror
                         </div>
                     </div>
