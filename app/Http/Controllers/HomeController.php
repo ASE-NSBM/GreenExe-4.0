@@ -78,7 +78,10 @@ class HomeController extends Controller
      */
     public function organizer()
     {
-        return view('organizer');
+        return view('organizer', [
+            // Editable from the dashboard (FR-70).
+            'blocks' => CompetitionInformation::published()->where('section', 'organizer')->get(),
+        ]);
     }
 
     public function contact()

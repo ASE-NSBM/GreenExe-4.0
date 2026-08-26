@@ -11,13 +11,17 @@ class EnsureUserIsAdmin
 {
     /**
      * Restrict dashboard access using authentication and authorization (FR-71).
+     *
+     * The Filament panel enforces this itself through User::canAccessPanel();
+     * this middleware guards the plain routes that sit alongside the panel,
+     * such as the CSV export.
      */
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
 
         if (! $user) {
-            return redirect()->route('admin.login');
+            return redirect()->route('filament.admin.auth.login');
         }
 
         if (! $user->isAdmin()) {
