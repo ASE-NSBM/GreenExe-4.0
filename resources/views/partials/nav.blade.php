@@ -9,9 +9,9 @@
         ['route' => 'organizer', 'label' => 'Organizer'],
     ];
 
-    // The home page opens on a full-bleed hero, so the bar floats over it.
+    // The home and organizer pages use the floating glassmorphic bar.
     // Every other page keeps the solid sticky bar.
-    $overlay = request()->routeIs('home');
+    $overlay = request()->routeIs('home', 'organizer');
 @endphp
 
 @if ($overlay)
@@ -35,7 +35,7 @@
 
             <div class="flex items-center gap-3">
                 <a href="{{ route('register') }}"
-                   class="hidden rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100 xl:block">
+                   class="gx-btn-primary hidden sm:inline-flex">
                     Register Now
                 </a>
                 <button type="button"
