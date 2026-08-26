@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Registrations;
 use App\Filament\Resources\Registrations\Pages\EditRegistration;
 use App\Filament\Resources\Registrations\Pages\ListRegistrations;
 use App\Filament\Resources\Registrations\Pages\ViewRegistration;
+use App\Filament\Resources\Registrations\RelationManagers\MembersRelationManager;
 use App\Filament\Resources\Registrations\Schemas\RegistrationForm;
 use App\Filament\Resources\Registrations\Schemas\RegistrationInfolist;
 use App\Filament\Resources\Registrations\Tables\RegistrationsTable;
@@ -62,6 +63,13 @@ class RegistrationResource extends Resource
     public static function getNavigationBadgeTooltip(): ?string
     {
         return 'Awaiting review';
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            MembersRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

@@ -76,7 +76,7 @@ variables and are never committed (SRS 8.2).
 | `/admin` | Dashboard with summary widgets (FR-58) |
 | `/admin/registrations` | List, search, filter (FR-59 to FR-61) |
 | `/admin/registrations/{id}` | Full team and project details (FR-62, FR-63) |
-| `/admin/registrations/{id}/edit` | Update status (FR-64) |
+| `/admin/registrations/{id}/edit` | Edit team, project and status; manage members (FR-62 to FR-64) |
 | `/admin/export` | CSV export, one row per member (FR-66) |
 | `/admin/faqs` | Manage FAQs (FR-67) |
 | `/admin/competition-information` | Competition and organizer copy (FR-68, FR-70) |
@@ -99,7 +99,12 @@ in the SRS still resolve:
 | `GET /admin/export` | unchanged — a real streamed download |
 
 Registrations cannot be created from the panel; they only arrive through the
-public form. Access is gated by `User::canAccessPanel()`, which reuses the same
+public form. Team and project fields are editable there, with the same rules
+`StoreRegistrationRequest` applies, so a correction cannot store something the
+public form would have rejected. Members are managed in a relation manager on the
+view and edit pages: each one can be opened on its own, edited, added or removed.
+`member_count` follows the member list, and promoting a member to team leader
+demotes the previous one. Access is gated by `User::canAccessPanel()`, which reuses the same
 `isAdmin()` role check as the rest of the app (FR-71).
 
 ## Registration behaviour

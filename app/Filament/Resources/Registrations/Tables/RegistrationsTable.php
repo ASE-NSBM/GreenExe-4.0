@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Registrations\Tables;
 
+use App\Filament\Resources\Registrations\RegistrationResource;
 use App\Models\Registration;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
@@ -102,6 +104,7 @@ class RegistrationsTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                EditAction::make(),
 
                 // FR-64: status is the only field an administrator edits.
                 Action::make('updateStatus')
@@ -133,6 +136,7 @@ class RegistrationsTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->recordUrl(fn (Model $record) => null);
+            // Clicking a row opens the full team and project detail.
+            ->recordUrl(fn (Model $record) => RegistrationResource::getUrl('view', ['record' => $record]));
     }
 }

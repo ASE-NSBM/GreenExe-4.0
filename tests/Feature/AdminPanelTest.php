@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Filament\Resources\CompetitionInformation\Pages\ListCompetitionInformation;
 use App\Filament\Resources\Faqs\Pages\ListFaqs;
+use App\Filament\Resources\Registrations\Pages\EditRegistration;
 use App\Filament\Resources\Registrations\Pages\ListRegistrations;
 use App\Filament\Resources\Registrations\Pages\ViewRegistration;
+use App\Filament\Resources\Registrations\RelationManagers\MembersRelationManager;
 use App\Filament\Resources\SmartCityContents\Pages\ListSmartCityContents;
 use App\Filament\Widgets\RegistrationStatsWidget;
 use App\Models\Faq;
@@ -39,12 +41,13 @@ class AdminPanelTest extends TestCase
             'member_count' => 2,
             'project_title' => 'Campus energy dashboard',
             'project_category' => 'smart-energy',
-            'project_description' => 'A dashboard for campus energy.',
-            'problem_statement' => 'Energy use is invisible.',
-            'proposed_solution' => 'Meter every block.',
-            'technology_used' => 'Laravel',
-            'innovation_description' => 'Live feedback loops.',
-            'expected_impact' => 'Lower consumption.',
+            // Long enough to satisfy the same minimums the public form applies.
+            'project_description' => 'A dashboard that meters every block on campus and publishes the readings.',
+            'problem_statement' => 'Energy use across the campus is invisible today.',
+            'proposed_solution' => 'Meter every block and publish the readings live.',
+            'technology_used' => 'Laravel, PostgreSQL, ESP32',
+            'innovation_description' => 'Live per-block feedback loops for occupants.',
+            'expected_impact' => 'Lower consumption across the whole campus.',
             'status' => 'pending',
         ], $attributes));
 
@@ -134,9 +137,170 @@ class AdminPanelTest extends TestCase
             ->test(ViewRegistration::class, ['record' => $registration->getKey()])
             ->assertSee('Solar Foxes')
             ->assertSee('Campus energy dashboard')
+            ->assertSee('Energy use across the campus is invisible today.');
+    }
+
+    /** FR-62: members are listed and each one can be opened on its own. */
+    public function test_members_are_listed_and_can_be_viewed_individually(): void
+    {
+        $registration = $this->registration();
+        $member = $registration->members()->first();
+
+        Livewire::actingAs($this->admin())
+            ->test(MembersRelationManager::class, [
+                'ownerRecord' => $registration,
+                'pageClass' => ViewRegistration::class,
+            ])
+            ->assertCanSeeTableRecords([$member])
             ->assertSee('Ada Perera')
             ->assertSee('ada@students.nsbm.ac.lk')
-            ->assertSee('Energy use is invisible.');
+            ->callTableAction('view', $member)
+            ->assertSuccessful();
+    }
+
+    /** FR-62: a member's own details can be corrected. */
+    public function test_an_administrator_can_edit_a_member(): void
+    {
+        $registration = $this->registration();
+        $member = $registration->members()->first();
+
+        Livewire::actingAs($this->admin())
+            ->test(MembersRelationManager::class, [
+                'ownerRecord' => $registration,
+                'pageClass' => EditRegistration::class,
+            ])
+            ->callTableAction('edit', $member, [
+                'full_name' => 'Ada M. Perera',
+                'student_id' => 'ST0009',
+                'email' => 'ada.m@students.nsbm.ac.lk',
+                'institution' => 'NSBM Green University',
+                'contact_number' => '0777654321',
+                'whatsapp_number' => '0777654321',
+                'is_leader' => true,
+            ])
+            ->assertHasNoTableActionErrors();
+
+        $member->refresh();
+
+        $this->assertSame('Ada M. Perera', $member->full_name);
+        $this->assertSame('ST0009', $member->student_id);
+        $this->assertSame('ada.m@students.nsbm.ac.lk', $member->email);
+    }
+
+    /** A member's student ID stays unique across the competition. */
+    public function test_a_member_cannot_take_another_teams_student_id(): void
+    {
+        $registration = $this->registration();
+        $other = $this->registration(['team_name' => 'Wind Owls']);
+        $other->members()->first()->update(['student_id' => 'ST9999']);
+
+        $member = $registration->members()->first();
+
+        Livewire::actingAs($this->admin())
+            ->test(MembersRelationManager::class, [
+                'ownerRecord' => $registration,
+                'pageClass' => EditRegistration::class,
+            ])
+            ->callTableAction('edit', $member, [
+                'full_name' => $member->full_name,
+                'student_id' => 'ST9999',
+                'email' => $member->email,
+                'institution' => $member->institution,
+                'contact_number' => $member->contact_number,
+                'whatsapp_number' => $member->whatsapp_number,
+            ])
+            ->assertHasTableActionErrors(['student_id']);
+
+        $this->assertSame('ST0001', $member->fresh()->student_id);
+    }
+
+    /** member_count is stored, so it has to follow the member list. */
+    public function test_adding_and_removing_members_keeps_the_team_size_in_step(): void
+    {
+        $registration = $this->registration();
+        $this->assertSame(2, $registration->member_count);
+
+        $manager = Livewire::actingAs($this->admin())
+            ->test(MembersRelationManager::class, [
+                'ownerRecord' => $registration,
+                'pageClass' => EditRegistration::class,
+            ]);
+
+        $manager->callTableAction('create', data: [
+            'full_name' => 'Nimal Silva',
+            'student_id' => 'ST0002',
+            'email' => 'nimal@students.nsbm.ac.lk',
+            'institution' => 'NSBM Green University',
+            'contact_number' => '0771111111',
+            'whatsapp_number' => '0771111111',
+        ])->assertHasNoTableActionErrors();
+
+        $this->assertSame(2, $registration->fresh()->member_count);
+        $this->assertDatabaseCount('team_members', 2);
+
+        $manager->callTableAction('delete', $registration->members()->where('student_id', 'ST0002')->first());
+
+        $this->assertSame(1, $registration->fresh()->member_count);
+    }
+
+    /** A team has exactly one leader. */
+    public function test_promoting_a_member_demotes_the_previous_leader(): void
+    {
+        $registration = $this->registration();
+        $leader = $registration->members()->first();
+
+        $second = $registration->members()->create([
+            'is_leader' => false,
+            'full_name' => 'Nimal Silva',
+            'student_id' => 'ST0002',
+            'email' => 'nimal@students.nsbm.ac.lk',
+            'contact_number' => '0771111111',
+            'whatsapp_number' => '0771111111',
+            'institution' => 'NSBM Green University',
+        ]);
+
+        Livewire::actingAs($this->admin())
+            ->test(MembersRelationManager::class, [
+                'ownerRecord' => $registration,
+                'pageClass' => EditRegistration::class,
+            ])
+            ->callTableAction('edit', $second, [
+                'full_name' => $second->full_name,
+                'student_id' => $second->student_id,
+                'email' => $second->email,
+                'institution' => $second->institution,
+                'contact_number' => $second->contact_number,
+                'whatsapp_number' => $second->whatsapp_number,
+                'is_leader' => true,
+            ])
+            ->assertHasNoTableActionErrors();
+
+        $this->assertTrue($second->fresh()->is_leader);
+        $this->assertFalse($leader->fresh()->is_leader);
+    }
+
+    /** FR-62, FR-63: team and project details are editable. */
+    public function test_an_administrator_can_edit_team_and_project_details(): void
+    {
+        $registration = $this->registration();
+
+        Livewire::actingAs($this->admin())
+            ->test(EditRegistration::class, ['record' => $registration->getKey()])
+            ->fillForm([
+                'team_name' => 'Solar Foxes Renamed',
+                'project_title' => 'Campus energy dashboard v2',
+                'project_category' => 'smart-buildings',
+                'status' => 'reviewed',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $registration->refresh();
+
+        $this->assertSame('Solar Foxes Renamed', $registration->team_name);
+        $this->assertSame('Campus energy dashboard v2', $registration->project_title);
+        $this->assertSame('smart-buildings', $registration->project_category);
+        $this->assertSame('reviewed', $registration->status);
     }
 
     /** FR-64 */

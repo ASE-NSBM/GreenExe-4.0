@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Registrations\Schemas;
 
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -37,22 +36,7 @@ class RegistrationInfolist
                 ->schema([
                     TextEntry::make('team_name')->label('Team name'),
                     TextEntry::make('member_count')->label('Members'),
-
-                    RepeatableEntry::make('members')
-                        ->columnSpanFull()
-                        ->columns(3)
-                        ->schema([
-                            TextEntry::make('full_name')
-                                ->label('Name')
-                                ->badge()
-                                ->color(fn ($record) => $record->is_leader ? 'success' : 'gray')
-                                ->formatStateUsing(fn ($state, $record) => $record->is_leader ? "{$state} (team leader)" : $state),
-                            TextEntry::make('student_id')->label('Student ID'),
-                            TextEntry::make('institution'),
-                            TextEntry::make('email')->copyable(),
-                            TextEntry::make('contact_number')->label('Contact'),
-                            TextEntry::make('whatsapp_number')->label('WhatsApp'),
-                        ]),
+                    // The member list itself is the relation manager below.
                 ]),
 
             Section::make('Project')
