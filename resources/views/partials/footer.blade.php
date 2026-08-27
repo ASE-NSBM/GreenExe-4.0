@@ -3,7 +3,7 @@
 <footer class="snap-start border-t border-white/10 bg-deep-green/30 {{ request()->routeIs('home') ? '' : 'mt-24' }}">
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-3">
         <div>
-            <h3 class="font-display text-lg font-semibold text-white">{{ config('greenexe.event.name') }}</h3>
+            <h3 class="font-playfair text-2xl italic text-white">{{ config('greenexe.event.name') }}</h3>
             <p class="mt-3 text-sm text-light-gray/70">{{ config('greenexe.event.tagline') }}</p>
             <p class="mt-4 text-sm text-light-gray/70">
                 Organised by {{ config('greenexe.event.organizer') }}
@@ -11,7 +11,7 @@
         </div>
 
         <div>
-            <h4 class="font-display text-sm font-semibold uppercase tracking-wider text-cyan-tech">Explore</h4>
+            <h4 class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">Explore</h4>
             <ul class="mt-4 space-y-2 text-sm text-light-gray/70">
                 <li><a class="hover:text-cyan-tech" href="{{ route('smart-city') }}">Smart Green City</a></li>
                 <li><a class="hover:text-cyan-tech" href="{{ route('competition') }}">Competition</a></li>
@@ -22,7 +22,7 @@
         </div>
 
         <div>
-            <h4 class="font-display text-sm font-semibold uppercase tracking-wider text-cyan-tech">Contact</h4>
+            <h4 class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">Contact</h4>
             <ul class="mt-4 space-y-2 text-sm text-light-gray/70">
                 <li><a class="hover:text-cyan-tech" href="mailto:{{ config('greenexe.contact.email') }}">{{ config('greenexe.contact.email') }}</a></li>
                 <li>{{ config('greenexe.contact.phone') }}</li>

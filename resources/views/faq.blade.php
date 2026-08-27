@@ -3,12 +3,16 @@
 @section('title', 'FAQ — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-4xl px-4 py-20">
+    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
         {{-- FR-53, FR-54 --}}
-        <h1 class="font-display text-4xl font-bold text-white">Frequently Asked Questions</h1>
-        <p class="mt-4 text-lg text-light-gray/75">Common questions from {{ config('greenexe.event.name') }} participants.</p>
+        @include('partials.page-header', [
+            'eyebrow' => 'Answers',
+            'titleItalic' => 'Frequently',
+            'title' => 'asked questions',
+            'lead' => 'Common questions from '.config('greenexe.event.name').' participants.',
+        ])
 
-        <div class="mt-10 space-y-3" data-accordion>
+        <div class="gx-reveal mt-12 space-y-3" data-accordion data-reveal>
             @forelse ($faqs as $faq)
                 @include('partials.faq-item', ['faq' => $faq])
             @empty
@@ -16,8 +20,8 @@
             @endforelse
         </div>
 
-        <div class="mt-12 gx-card text-center">
-            <p class="text-light-gray/75">Still have a question?</p>
+        <div class="gx-reveal mt-12 gx-card text-center" data-reveal>
+            <p class="text-white/75">Still have a question?</p>
             <a href="{{ route('contact') }}" class="gx-btn-ghost mt-4">Contact the organisers</a>
         </div>
     </section>

@@ -73,7 +73,7 @@
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4" aria-label="Main navigation">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-smart-green to-cyan-tech font-display text-lg font-bold text-dark-navy">G</span>
-                <span class="font-display text-lg font-semibold tracking-wide text-white">
+                <span class="font-playfair text-2xl italic text-white">
                     {{ config('greenexe.event.name') }}
                 </span>
             </a>
