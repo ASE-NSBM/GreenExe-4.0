@@ -3,14 +3,16 @@
 @section('title', 'About '.config('greenexe.event.name').' — '.config('greenexe.event.concept'))
 
 @section('content')
-    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
+    @include('partials.page-hero', [
+        'image' => 'assets/img/highlights/smartcity-about.jpg',
+        'eyebrow' => config('greenexe.event.name'),
+        'titleItalic' => 'About the',
+        'title' => 'competition',
+        'lead' => config('greenexe.event.tagline'),
+    ])
+
+    <section class="gx-section mx-auto max-w-5xl px-6 pb-24">
         {{-- FR-8, FR-9 --}}
-        @include('partials.page-header', [
-            'eyebrow' => config('greenexe.event.name'),
-            'titleItalic' => 'About the',
-            'title' => 'competition',
-            'lead' => config('greenexe.event.tagline'),
-        ])
 
         <div class="mt-12 space-y-6">
             @forelse ($sections->flatten() as $section)
@@ -38,6 +40,33 @@
             </p>
             <a href="{{ route('smart-city') }}" class="mt-4 inline-block text-sm text-cyan-tech hover:underline">Explore the concept →</a>
         </div>
+
+        {{-- The pillars are already passed to this view; showing the first six as
+             artwork tiles gives the page the same weight as the home carousel. --}}
+        @if ($smartCityPillars->isNotEmpty())
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($smartCityPillars->take(6) as $pillar)
+                    <a href="{{ route('smart-city') }}"
+                       class="gx-reveal group relative flex aspect-4/3 flex-col justify-end overflow-hidden rounded-2xl border border-white/10 transition hover:border-cyan-tech/40"
+                       data-reveal style="transition-delay: {{ min($loop->index, 5) * 0.06 }}s">
+                        @if ($artwork = $pillar->artwork())
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                                 style="background-image: url('{{ $artwork }}')" aria-hidden="true"></div>
+                        @else
+                            <div class="absolute inset-0 bg-gradient-to-br from-forest-green via-deep-green to-dark-navy" aria-hidden="true"></div>
+                        @endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/60 to-transparent" aria-hidden="true"></div>
+
+                        <div class="relative p-5">
+                            <span class="text-xl">{{ $pillar->icon ?? '🌿' }}</span>
+                            <h3 class="gx-card-title mt-2 text-base font-medium text-white group-hover:text-cyan-tech">
+                                {{ $pillar->title }}
+                            </h3>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
 
         {{-- FR-11, FR-12 --}}
         <div class="gx-reveal mt-6 grid gap-6 md:grid-cols-2" data-reveal>

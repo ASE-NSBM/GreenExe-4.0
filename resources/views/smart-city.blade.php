@@ -4,13 +4,15 @@
 
 @section('content')
     {{-- FR-15 --}}
-    <section class="gx-section mx-auto max-w-6xl px-6 py-24 sm:px-10 md:px-14">
-        @include('partials.page-header', [
-            'eyebrow' => 'The concept',
-            'titleItalic' => 'Smart Green',
-            'title' => 'City',
-            'lead' => 'An enhanced, futuristic version of the '.config('greenexe.event.university').' environment, where a green campus becomes a connected, efficient and intelligent city.',
-        ])
+    @include('partials.page-hero', [
+        'image' => 'assets/img/Smartbuildings.jpg',
+        'eyebrow' => 'The concept',
+        'titleItalic' => 'Smart Green',
+        'title' => 'City',
+        'lead' => 'An enhanced, futuristic version of the '.config('greenexe.event.university').' environment, where a green campus becomes a connected, efficient and intelligent city.',
+    ])
+
+    <section class="gx-section mx-auto max-w-6xl px-6 pb-24">
 
         <div class="mt-12 grid gap-6 md:grid-cols-2">
             @forelse ($vision as $item)
@@ -39,14 +41,23 @@
                     $lead = array_shift($lines);
                 @endphp
 
-                <article class="gx-card gx-reveal transition hover:border-cyan-tech/40" data-reveal
-                         style="transition-delay: {{ min($loop->index, 5) * 0.06 }}s">
+                <article class="gx-reveal group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 transition hover:border-cyan-tech/40"
+                         data-reveal style="transition-delay: {{ min($loop->index, 5) * 0.06 }}s">
+                    @if ($artwork = $pillar->artwork())
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                             style="background-image: url('{{ $artwork }}')" aria-hidden="true"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/90 to-dark-navy/60" aria-hidden="true"></div>
+                    @else
+                        <div class="absolute inset-0 bg-white/5 backdrop-blur-md" aria-hidden="true"></div>
+                    @endif
+
+                    <div class="relative p-6">
                     <div class="text-2xl">{{ $pillar->icon ?? '⚡' }}</div>
                     <h3 class="gx-card-title mt-4 text-lg font-medium text-white">{{ $pillar->title }}</h3>
-                    <p class="mt-2 text-sm text-light-gray/70">{{ $lead }}</p>
+                    <p class="mt-2 text-sm text-white/75">{{ $lead }}</p>
 
                     @if ($lines)
-                        <ul class="mt-3 space-y-1.5 border-t border-white/10 pt-3 text-sm text-light-gray/70">
+                        <ul class="mt-3 space-y-1.5 border-t border-white/15 pt-3 text-sm text-white/75">
                             @foreach ($lines as $line)
                                 <li class="flex gap-2">
                                     <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-fresh-green"></span>
@@ -55,6 +66,7 @@
                             @endforeach
                         </ul>
                     @endif
+                    </div>
                 </article>
             @empty
                 <p class="col-span-full text-light-gray/60">Smart city pillars will be published soon.</p>

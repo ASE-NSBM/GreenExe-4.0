@@ -3,14 +3,16 @@
 @section('title', 'Rules & Eligibility — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
+    @include('partials.page-hero', [
+        'image' => 'assets/img/bg2.jpeg',
+        'eyebrow' => 'Before you enter',
+        'titleItalic' => 'Rules &',
+        'title' => 'eligibility',
+        'lead' => 'Final competition rules are confirmed by the organisers before registration opens.',
+    ])
+
+    <section class="gx-section mx-auto max-w-5xl px-6 pb-24">
         {{-- FR-44 to FR-48 --}}
-        @include('partials.page-header', [
-            'eyebrow' => 'Before you enter',
-            'titleItalic' => 'Rules &',
-            'title' => 'eligibility',
-            'lead' => 'Final competition rules are confirmed by the organisers before registration opens.',
-        ])
 
         @php
             $labels = [
