@@ -64,12 +64,14 @@ class HomeController extends Controller
      */
     public function about()
     {
+        $pillars = SmartCityContent::published()->where('section', 'pillar')->get();
+        $pillars->each(fn ($pillar) => $pillar->image = $this->highlightImage($pillar->title));
+
         return view('about', [
-            'sections' => CompetitionInformation::published()
-                ->whereIn('section', ['overview', 'purpose', 'benefits'])
-                ->get()
-                ->groupBy('section'),
-            'faqs' => Faq::published()->take(5)->get(),
+            'sections' => CompetitionInformation::published()->get()->groupBy('section'),
+            'smartCityVision' => SmartCityContent::published()->where('section', 'vision')->get(),
+            'smartCityPillars' => $pillars,
+            'faqs' => Faq::published()->get(),
         ]);
     }
 

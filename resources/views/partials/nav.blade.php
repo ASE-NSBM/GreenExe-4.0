@@ -9,9 +9,8 @@
         ['route' => 'organizer', 'label' => 'Organizer'],
     ];
 
-    // The home and organizer pages use the floating glassmorphic bar.
-    // Every other page keeps the solid sticky bar.
-    $overlay = request()->routeIs('home', 'organizer');
+    // The floating glassmorphic navigation bar is used consistently across pages.
+    $overlay = true;
 @endphp
 
 @if ($overlay)
