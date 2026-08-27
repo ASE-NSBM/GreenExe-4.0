@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About '.config('greenexe.event.name'))
+@section('title', 'About '.config('greenexe.event.name').' — '.config('greenexe.event.concept'))
 
 @section('content')
     <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
@@ -24,9 +24,6 @@
                     <p class="mt-3 text-light-gray/75">
                         Competition content is managed from the administrator dashboard and will appear here once published.
                     </p>
-                </article>
-            @endforelse
-        </div>
 
         {{-- FR-10 --}}
         <div class="gx-reveal mt-12 gx-card border-cyan-tech/30" data-reveal>
@@ -59,7 +56,6 @@
                     <li>• Networking with the ASE community and partners</li>
                 </ul>
             </div>
-        </div>
 
         {{-- FR-14 --}}
         @if ($faqs->isNotEmpty())
@@ -70,8 +66,8 @@
                         @include('partials.faq-item', ['faq' => $faq])
                     @endforeach
                 </div>
-                <a href="{{ route('faq') }}" class="mt-6 inline-block text-sm text-cyan-tech hover:underline">See all FAQs →</a>
             </div>
-        @endif
-    </section>
+        </section>
+    </div>
 @endsection
+

@@ -9,9 +9,8 @@
         ['route' => 'organizer', 'label' => 'Organizer'],
     ];
 
-    // The home and organizer pages use the floating glassmorphic bar.
-    // Every other page keeps the solid sticky bar.
-    $overlay = request()->routeIs('home', 'organizer');
+    // The floating glassmorphic navigation bar is used consistently across pages.
+    $overlay = true;
 @endphp
 
 @if ($overlay)
@@ -34,10 +33,16 @@
             </ul>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('register') }}"
-                   class="gx-btn-primary hidden sm:inline-flex">
-                    Register Now
-                </a>
+                @unless (request()->routeIs('about'))
+                    <a href="{{ route('register') }}"
+                       class="gx-btn-primary hidden sm:inline-flex">
+                        Register Now
+                    </a>
+                @else
+                    <span class="gx-btn-primary hidden sm:inline-flex invisible pointer-events-none" aria-hidden="true">
+                        Register Now
+                    </span>
+                @endunless
                 <button type="button"
                         class="rounded-full border border-white/30 bg-white/20 p-2 text-white backdrop-blur-md xl:hidden"
                         data-mobile-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation">
@@ -57,7 +62,9 @@
                         </a>
                     </li>
                 @endforeach
-                <li><a href="{{ route('register') }}" class="gx-btn-primary w-full">Register Now</a></li>
+                @unless (request()->routeIs('about'))
+                    <li><a href="{{ route('register') }}" class="gx-btn-primary w-full">Register Now</a></li>
+                @endunless
             </ul>
         </div>
     </header>
