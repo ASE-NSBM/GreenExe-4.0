@@ -13,10 +13,15 @@
             </svg>
         </span>
     </button>
-    <div id="faq-answer-{{ $faq->id }}" class="hidden px-6 pb-6 text-sm leading-relaxed text-white/75 sm:text-base" data-accordion-panel>
-        <div class="border-t border-white/10 pt-4">
-            {!! nl2br(e($faq->answer)) !!}
+    <div id="faq-answer-{{ $faq->id }}"
+         class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-out"
+         data-accordion-panel>
+        <div class="overflow-hidden px-6 text-sm leading-relaxed text-white/75 sm:text-base">
+            <div class="border-t border-white/10 pt-4 pb-6">
+                {!! nl2br(e($faq->answer)) !!}
+            </div>
         </div>
     </div>
 </div>
+
 

@@ -25,9 +25,20 @@ function initAccordions() {
             const icon = trigger.querySelector('[data-accordion-icon]');
             if (!panel) return;
 
-            const open = panel.classList.toggle('hidden') === false;
+            const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+            const open = !isExpanded;
+
             trigger.setAttribute('aria-expanded', String(open));
             if (icon) icon.classList.toggle('rotate-180', open);
+
+            if (panel.classList.contains('grid-rows-[0fr]') || panel.classList.contains('grid-rows-[1fr]')) {
+                panel.classList.toggle('grid-rows-[0fr]', !open);
+                panel.classList.toggle('grid-rows-[1fr]', open);
+                panel.classList.toggle('opacity-0', !open);
+                panel.classList.toggle('opacity-100', open);
+            } else {
+                panel.classList.toggle('hidden', !open);
+            }
         });
     });
 }
