@@ -57,20 +57,29 @@ class Registration extends Model
         return $code;
     }
 
+    /**
+     * Free-text search across the fields organisers look teams up by.
+     *
+     * `like` is case-sensitive on PostgreSQL but not on SQLite, so the operator
+     * follows the driver — otherwise searching "solar" would miss "Solar Foxes"
+     * on Supabase while passing locally.
+     */
     public function scopeSearch($query, ?string $term)
     {
         if (blank($term)) {
             return $query;
         }
 
-        return $query->where(function ($q) use ($term) {
-            $q->where('registration_code', 'like', "%{$term}%")
-                ->orWhere('team_name', 'like', "%{$term}%")
-                ->orWhere('project_title', 'like', "%{$term}%")
-                ->orWhereHas('members', function ($m) use ($term) {
-                    $m->where('full_name', 'like', "%{$term}%")
-                        ->orWhere('email', 'like', "%{$term}%")
-                        ->orWhere('student_id', 'like', "%{$term}%");
+        $like = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
+
+        return $query->where(function ($q) use ($term, $like) {
+            $q->where('registration_code', $like, "%{$term}%")
+                ->orWhere('team_name', $like, "%{$term}%")
+                ->orWhere('project_title', $like, "%{$term}%")
+                ->orWhereHas('members', function ($m) use ($term, $like) {
+                    $m->where('full_name', $like, "%{$term}%")
+                        ->orWhere('email', $like, "%{$term}%")
+                        ->orWhere('student_id', $like, "%{$term}%");
                 });
         });
     }
