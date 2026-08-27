@@ -148,8 +148,16 @@
         {{-- =========================================================================
              3. FR-10: Explain the Smart Green City Concept & 9 Pillars
              ========================================================================= --}}
-        <section id="smart-green-city" class="border-t border-white/10 py-20 md:py-28">
-            <div class="mx-auto max-w-6xl px-6 sm:px-10">
+        <section id="smart-green-city" class="relative overflow-hidden border-t border-white/10 bg-dark-navy py-32 md:py-44">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-75 md:opacity-85 scale-105 transition-transform duration-1000"
+                 style="background-image: url('{{ asset('assets/img/highlights/smartcity-about.jpg') }}')"
+                 aria-hidden="true"></div>
+
+            {{-- Vignette gradients balanced to highlight the photograph while preserving text contrast --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-navy/95 via-dark-navy/75 to-dark-navy/45" aria-hidden="true"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/30 to-dark-navy/70" aria-hidden="true"></div>
+
+            <div class="relative z-10 mx-auto max-w-6xl px-6 sm:px-10">
                 <div class="gx-reveal max-w-3xl" data-reveal>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">The Guiding Concept</p>
                     <h2 class="mt-3 leading-[0.95] text-white">
@@ -179,7 +187,7 @@
                 @endphp
 
                 <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    @forelse ($smartCityPillars as $index => $pillar)
+                    @foreach ($smartCityPillars as $index => $pillar)
                         @php
                             $lines = preg_split('/\R+/', trim($pillar->description));
                             $lead = array_shift($lines);
@@ -223,9 +231,7 @@
                                 @endif
                             </div>
                         </article>
-                    @empty
-                        <p class="col-span-full text-white/60">Smart city pillars will be published soon.</p>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
         </section>
