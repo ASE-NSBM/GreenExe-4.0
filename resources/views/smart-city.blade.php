@@ -34,17 +34,9 @@
         <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @forelse ($pillars as $pillar)
                 @php
-                    $tints = [
-                        'from-forest-green via-deep-green to-dark-navy',
-                        'from-smart-green/80 via-forest-green to-dark-navy',
-                        'from-eco-lime/40 via-smart-green/60 to-dark-navy',
-                        'from-cyan-tech/40 via-forest-green to-dark-navy',
-                        'from-cyan-tech/30 via-deep-green to-dark-navy',
-                        'from-fresh-green/40 via-forest-green to-dark-navy',
-                        'from-cyan-tech/45 via-smart-green/50 to-dark-navy',
-                        'from-deep-green via-forest-green/80 to-dark-navy',
-                        'from-eco-lime/30 via-cyan-tech/30 to-dark-navy',
-                    ];
+                    // Stored as a lead sentence followed by one point per line.
+                    $lines = preg_split('/\R+/', trim($pillar->description));
+                    $lead = array_shift($lines);
                 @endphp
 
                 <article class="gx-card gx-reveal transition hover:border-cyan-tech/40" data-reveal

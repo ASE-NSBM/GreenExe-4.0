@@ -24,6 +24,9 @@
                     <p class="mt-3 text-light-gray/75">
                         Competition content is managed from the administrator dashboard and will appear here once published.
                     </p>
+                </article>
+            @endforelse
+        </div>
 
         {{-- FR-10 --}}
         <div class="gx-reveal mt-12 gx-card border-cyan-tech/30" data-reveal>
@@ -56,6 +59,7 @@
                     <li>• Networking with the ASE community and partners</li>
                 </ul>
             </div>
+        </div>
 
         {{-- FR-14 --}}
         @if ($faqs->isNotEmpty())
@@ -67,6 +71,7 @@
                     @endforeach
                 </div>
             </div>
+        @endif
         </section>
     </div>
 @endsection
