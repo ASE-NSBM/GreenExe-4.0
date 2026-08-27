@@ -3,12 +3,14 @@
 @section('title', 'Rules & Eligibility — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-5xl px-4 py-20">
+    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
         {{-- FR-44 to FR-48 --}}
-        <h1 class="font-display text-4xl font-bold text-white">Rules &amp; Eligibility</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">
-            Final competition rules are confirmed by the organisers before registration opens.
-        </p>
+        @include('partials.page-header', [
+            'eyebrow' => 'Before you enter',
+            'titleItalic' => 'Rules &',
+            'title' => 'eligibility',
+            'lead' => 'Final competition rules are confirmed by the organisers before registration opens.',
+        ])
 
         @php
             $labels = [
@@ -22,13 +24,13 @@
 
         <div class="mt-12 space-y-10">
             @foreach ($labels as $key => $label)
-                <div>
-                    <h2 class="font-display text-2xl font-semibold text-cyan-tech">{!! $label !!}</h2>
+                <div class="gx-reveal" data-reveal>
+                    <h2 class="gx-group-label text-2xl font-normal text-white sm:text-3xl">{!! $label !!}</h2>
                     <div class="mt-4 space-y-4">
                         @forelse ($sections[$key] ?? [] as $item)
                             <article class="gx-card">
-                                <h3 class="font-display text-lg font-semibold text-white">{{ $item->title }}</h3>
-                                <p class="mt-2 whitespace-pre-line text-light-gray/75">{{ $item->body }}</p>
+                                <h3 class="gx-card-title text-lg font-medium text-white">{{ $item->title }}</h3>
+                                <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/75 md:text-base">{{ $item->body }}</p>
                             </article>
                         @empty
                             <p class="text-sm text-light-gray/60">To be published by the organisers.</p>
@@ -38,8 +40,8 @@
             @endforeach
         </div>
 
-        <div class="mt-12 gx-card border-eco-lime/30">
-            <h2 class="font-display text-lg font-semibold text-white">Team size</h2>
+        <div class="gx-reveal mt-12 gx-card border-eco-lime/30" data-reveal>
+            <h2 class="gx-card-title text-lg font-medium text-white">Team size</h2>
             <p class="mt-2 text-light-gray/75">
                 Teams must have between {{ config('greenexe.team.min_members') }} and
                 {{ config('greenexe.team.max_members') }} members. The first member entered is treated as the team leader.
