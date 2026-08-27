@@ -350,12 +350,45 @@
                     </p>
                 </div>
 
+                @php
+                    $displayFaqs = ($faqs && $faqs->isNotEmpty()) ? $faqs : collect([
+                        (object)[
+                            'id' => 'mock-1',
+                            'question' => 'Who is eligible to participate in GreenExE 4.0?',
+                            'answer' => 'Undergraduate students from any recognized university or faculty are eligible to participate. Multidisciplinary teams uniting software developers, designers, IoT builders, and environmental researchers are strongly welcomed.',
+                        ],
+                        (object)[
+                            'id' => 'mock-2',
+                            'question' => 'How many members can each team have?',
+                            'answer' => 'Teams must consist of '.config('greenexe.team.min_members').' to '.config('greenexe.team.max_members').' members. The first registered student is automatically designated as the official team leader and primary contact.',
+                        ],
+                        (object)[
+                            'id' => 'mock-3',
+                            'question' => 'Does our project have to be completely built before registering?',
+                            'answer' => 'No. Initial registration collects your concept proposal: the problem statement, proposed technical architecture, innovation highlights, and expected sustainability impact. Functional prototypes are presented during subsequent rounds.',
+                        ],
+                        (object)[
+                            'id' => 'mock-4',
+                            'question' => 'What happens after our team submits the registration?',
+                            'answer' => 'You will receive a unique registration reference code on screen and in your confirmation. Organizers will communicate with team leaders using this reference for all subsequent evaluation rounds.',
+                        ],
+                        (object)[
+                            'id' => 'mock-5',
+                            'question' => 'What technologies or themes can our project focus on?',
+                            'answer' => 'Projects should align with the Smart Green City theme, covering pillars such as smart buildings, smart energy, intelligent transportation, environmental monitoring, water/waste automation, or connected digital services.',
+                        ],
+                        (object)[
+                            'id' => 'mock-6',
+                            'question' => 'Is our team registration information publicly exposed?',
+                            'answer' => 'No. Personal contact details and student identification are strictly protected and only accessible by authorized event administrators.',
+                        ],
+                    ]);
+                @endphp
+
                 <div class="mt-14 space-y-3" data-accordion>
-                    @forelse ($faqs as $faq)
+                    @foreach ($displayFaqs as $faq)
                         @include('partials.faq-item', ['faq' => $faq])
-                    @empty
-                        <p class="text-center text-white/60">FAQs will be published soon.</p>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
         </section>
