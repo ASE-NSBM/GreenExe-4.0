@@ -28,6 +28,29 @@ function initAccordions() {
             const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
             const open = !isExpanded;
 
+            // When opening a new FAQ, close all other open FAQs in the accordion
+            if (open) {
+                const container = trigger.closest('[data-accordion]') || document;
+                container.querySelectorAll('[data-accordion-trigger]').forEach((otherTrigger) => {
+                    if (otherTrigger !== trigger) {
+                        const otherPanel = document.getElementById(otherTrigger.getAttribute('aria-controls'));
+                        const otherIcon = otherTrigger.querySelector('[data-accordion-icon]');
+
+                        otherTrigger.setAttribute('aria-expanded', 'false');
+                        if (otherIcon) otherIcon.classList.remove('rotate-180');
+
+                        if (otherPanel) {
+                            if (otherPanel.classList.contains('grid-rows-[0fr]') || otherPanel.classList.contains('grid-rows-[1fr]')) {
+                                otherPanel.classList.remove('grid-rows-[1fr]', 'opacity-100');
+                                otherPanel.classList.add('grid-rows-[0fr]', 'opacity-0');
+                            } else {
+                                otherPanel.classList.add('hidden');
+                            }
+                        }
+                    }
+                });
+            }
+
             trigger.setAttribute('aria-expanded', String(open));
             if (icon) icon.classList.toggle('rotate-180', open);
 

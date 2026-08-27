@@ -214,11 +214,11 @@
                 </div>
 
                 <div class="mt-14 grid gap-8 md:grid-cols-2">
-                    {{-- FR-11: Eligibility --}}
+                    {{-- Eligibility --}}
                     <div class="gx-reveal border-t border-white/15 pt-8" data-reveal>
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-eco-lime">01</span>
-                            <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">FR-11</span>
+                            <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">Eligibility Criteria</span>
                         </div>
                         <h3 class="mt-2 text-2xl font-medium text-white" style="letter-spacing: -0.04em">
                             Participant Eligibility
@@ -239,11 +239,11 @@
                         </ul>
                     </div>
 
-                    {{-- FR-12: Rules & Requirements --}}
+                    {{-- Rules & Requirements --}}
                     <div class="gx-reveal border-t border-white/15 pt-8" data-reveal style="transition-delay: 0.15s">
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-cyan-tech">02</span>
-                            <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">FR-12</span>
+                            <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">Competition Rules</span>
                         </div>
                         <h3 class="mt-2 text-2xl font-medium text-white" style="letter-spacing: -0.04em">
                             Rules &amp; Requirements
