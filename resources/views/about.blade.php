@@ -10,18 +10,20 @@
              ========================================================================= --}}
         <section class="relative mx-auto max-w-6xl px-6 pt-32 pb-16 sm:px-10 md:pt-40 md:pb-24">
             <div class="max-w-3xl">
-                <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">
+                <p class="hero-anim hero-fade text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech"
+                   style="animation-delay: 0.1s">
                     {{ config('greenexe.event.name') }} &bull; Complete Competition Specification
                 </p>
 
                 <h1 class="mt-4 leading-[0.95] text-white">
-                    <span class="block font-playfair text-5xl font-normal italic sm:text-7xl md:text-8xl"
-                          style="letter-spacing: -0.05em">About</span>
-                    <span class="-mt-1 block text-5xl font-normal sm:text-7xl md:text-8xl"
-                          style="letter-spacing: -0.08em">{{ config('greenexe.event.name') }}</span>
+                    <span class="hero-anim hero-reveal block font-playfair text-5xl font-normal italic sm:text-7xl md:text-8xl"
+                          style="letter-spacing: -0.05em; animation-delay: 0.25s">About</span>
+                    <span class="hero-anim hero-reveal -mt-1 block text-5xl font-normal sm:text-7xl md:text-8xl"
+                          style="letter-spacing: -0.08em; animation-delay: 0.42s">{{ config('greenexe.event.name') }}</span>
                 </h1>
 
-                <p class="mt-6 text-base leading-relaxed text-white/80 sm:text-lg">
+                <p class="hero-anim hero-fade mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
+                   style="animation-delay: 0.6s">
                     {{ config('greenexe.event.tagline') }} Organized by the {{ config('greenexe.event.organizer') }}
                     under the {{ config('greenexe.event.brand') }} brand at {{ config('greenexe.event.university') }}.
                 </p>
@@ -35,7 +37,7 @@
             <div class="mx-auto max-w-6xl px-6 sm:px-10">
                 <div class="grid gap-12 md:grid-cols-12 md:gap-16">
                     {{-- Left Narrative --}}
-                    <div class="md:col-span-5">
+                    <div class="gx-reveal md:col-span-5" data-reveal>
                         <p class="text-xs font-medium uppercase tracking-[0.3em] text-fresh-green">
                             Purpose &amp; Objectives
                         </p>
@@ -53,7 +55,7 @@
 
                         <div class="mt-8">
                             <a href="{{ route('register') }}"
-                               class="rounded-full bg-[#e8702a] px-7 py-3 text-sm font-medium text-white transition-all hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-lg hover:shadow-[#e8702a]/30 active:scale-95">
+                               class="rounded-full bg-[#e8702a] px-7 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-lg hover:shadow-[#e8702a]/30 active:scale-95">
                                 Register Your Team
                             </a>
                         </div>
@@ -82,8 +84,9 @@
                         @endphp
 
                         <div class="space-y-0">
-                            @foreach ($purposeEntries as $item)
-                                <article class="group relative border-t border-white/15 py-8 first:border-t-0 first:pt-0">
+                            @foreach ($purposeEntries as $index => $item)
+                                <article class="gx-reveal group relative border-t border-white/15 py-8 first:border-t-0 first:pt-0"
+                                         data-reveal style="transition-delay: {{ 0.15 * ($index + 1) }}s">
                                     <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full" aria-hidden="true"></span>
 
                                     <div class="flex items-baseline gap-4">
@@ -91,7 +94,7 @@
                                         <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">{{ $item['label'] }}</span>
                                     </div>
 
-                                    <h3 class="mt-2 text-xl font-medium text-white transition-colors group-hover:text-cyan-tech md:text-2xl"
+                                    <h3 class="mt-2 text-xl font-medium text-white transition-colors duration-300 group-hover:text-cyan-tech md:text-2xl"
                                         style="letter-spacing: -0.04em">
                                         {{ $item['title'] }}
                                     </h3>
@@ -112,7 +115,7 @@
              ========================================================================= --}}
         <section id="smart-green-city" class="border-t border-white/10 py-20 md:py-28">
             <div class="mx-auto max-w-6xl px-6 sm:px-10">
-                <div class="max-w-3xl">
+                <div class="gx-reveal max-w-3xl" data-reveal>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">The Guiding Concept</p>
                     <h2 class="mt-3 leading-[0.95] text-white">
                         <span class="block font-playfair text-4xl font-normal italic sm:text-5xl md:text-6xl"
@@ -148,11 +151,12 @@
                             $tint = $tints[$index % count($tints)];
                         @endphp
 
-                        <article class="group relative flex min-h-[380px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition-all duration-300 hover:border-cyan-tech/40">
+                        <article class="gx-reveal group relative flex min-h-[380px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-tech/50 hover:shadow-2xl hover:shadow-cyan-tech/10"
+                                 data-reveal style="transition-delay: {{ 0.08 * ($index % 3 + 1) }}s">
                             @if (!empty($pillar->image))
-                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                                      style="background-image: url('{{ $pillar->image }}')" aria-hidden="true"></div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/85 to-dark-navy/35" aria-hidden="true"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/85 to-dark-navy/35 transition-opacity duration-500 group-hover:opacity-90" aria-hidden="true"></div>
                             @else
                                 <div class="absolute inset-0 bg-gradient-to-br {{ $tint }}" aria-hidden="true"></div>
                                 <div class="gx-grid-bg absolute inset-0 opacity-30" aria-hidden="true"></div>
@@ -163,9 +167,9 @@
                             <span class="gx-rank" aria-hidden="true">{{ $index + 1 }}</span>
 
                             <div class="relative flex h-full flex-col p-6 sm:p-8">
-                                <span class="text-2xl">{{ $pillar->icon ?? '🌿' }}</span>
+                                <span class="text-2xl transition-transform duration-300 group-hover:scale-110">{{ $pillar->icon ?? '🌿' }}</span>
 
-                                <h3 class="mt-auto text-xl font-medium leading-tight text-white transition-colors group-hover:text-cyan-tech md:text-2xl"
+                                <h3 class="mt-auto text-xl font-medium leading-tight text-white transition-colors duration-300 group-hover:text-cyan-tech md:text-2xl"
                                     style="letter-spacing: -0.04em">
                                     {{ $pillar->title }}
                                 </h3>
@@ -176,7 +180,7 @@
                                     <ul class="mt-4 space-y-2 border-t border-white/10 pt-4 text-xs leading-relaxed text-white/75 sm:text-sm">
                                         @foreach ($lines as $line)
                                             <li class="flex items-start gap-2.5">
-                                                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-fresh-green"></span>
+                                                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-fresh-green transition-transform duration-300 group-hover:scale-125"></span>
                                                 <span>{{ $line }}</span>
                                             </li>
                                         @endforeach
@@ -196,7 +200,7 @@
              ========================================================================= --}}
         <section id="rules-eligibility" class="border-t border-white/10 bg-dark-navy/60 py-20 md:py-28">
             <div class="mx-auto max-w-6xl px-6 sm:px-10">
-                <div class="max-w-3xl">
+                <div class="gx-reveal max-w-3xl" data-reveal>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-eco-lime">Participation Guidelines</p>
                     <h2 class="mt-3 leading-[0.95] text-white">
                         <span class="block font-playfair text-4xl font-normal italic sm:text-5xl md:text-6xl"
@@ -211,7 +215,7 @@
 
                 <div class="mt-14 grid gap-8 md:grid-cols-2">
                     {{-- FR-11: Eligibility --}}
-                    <div class="border-t border-white/15 pt-8">
+                    <div class="gx-reveal border-t border-white/15 pt-8" data-reveal>
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-eco-lime">01</span>
                             <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">FR-11</span>
@@ -236,7 +240,7 @@
                     </div>
 
                     {{-- FR-12: Rules & Requirements --}}
-                    <div class="border-t border-white/15 pt-8">
+                    <div class="gx-reveal border-t border-white/15 pt-8" data-reveal style="transition-delay: 0.15s">
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-cyan-tech">02</span>
                             <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">FR-12</span>
@@ -272,7 +276,7 @@
              ========================================================================= --}}
         <section id="benefits" class="border-t border-white/10 py-20 md:py-28">
             <div class="mx-auto max-w-6xl px-6 sm:px-10">
-                <div class="max-w-3xl">
+                <div class="gx-reveal max-w-3xl" data-reveal>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-fresh-green">Why Participate</p>
                     <h2 class="mt-3 leading-[0.95] text-white">
                         <span class="block font-playfair text-4xl font-normal italic sm:text-5xl md:text-6xl"
@@ -311,11 +315,12 @@
                 @endphp
 
                 <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    @foreach ($benefitCards as $benefit)
-                        <article class="group relative border-t border-white/15 pt-6 transition-colors">
+                    @foreach ($benefitCards as $index => $benefit)
+                        <article class="gx-reveal group relative border-t border-white/15 pt-6 transition-colors"
+                                 data-reveal style="transition-delay: {{ 0.1 * ($index + 1) }}s">
                             <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-fresh-green to-transparent transition-all duration-500 group-hover:w-full" aria-hidden="true"></span>
                             <span class="font-playfair text-sm italic text-fresh-green">{{ $benefit['num'] }}</span>
-                            <h3 class="mt-2 text-lg font-medium text-white transition-colors group-hover:text-fresh-green" style="letter-spacing: -0.03em">
+                            <h3 class="mt-2 text-lg font-medium text-white transition-colors duration-300 group-hover:text-fresh-green" style="letter-spacing: -0.03em">
                                 {{ $benefit['title'] }}
                             </h3>
                             <p class="mt-3 text-xs leading-relaxed text-white/70 sm:text-sm">
@@ -332,7 +337,7 @@
              ========================================================================= --}}
         <section id="faqs" class="border-t border-white/10 bg-dark-navy/60 py-20 md:py-28">
             <div class="mx-auto max-w-4xl px-6 sm:px-10">
-                <div class="text-center">
+                <div class="gx-reveal text-center" data-reveal>
                     <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">Direct Answers</p>
                     <h2 class="mt-3 leading-[0.95] text-white">
                         <span class="block font-playfair text-4xl font-normal italic sm:text-5xl md:text-6xl"
@@ -359,7 +364,7 @@
              7. Registration Call to Action
              ========================================================================= --}}
         <section class="border-t border-white/10 bg-dark-navy/90 py-20 md:py-24">
-            <div class="mx-auto max-w-3xl px-6 text-center sm:px-10">
+            <div class="gx-reveal mx-auto max-w-3xl px-6 text-center sm:px-10" data-reveal>
                 <p class="text-xs font-medium uppercase tracking-[0.3em] text-eco-lime">Next Step</p>
                 <h2 class="mt-3 leading-[0.95] text-white">
                     <span class="block font-playfair text-3xl font-normal italic sm:text-4xl md:text-5xl"
@@ -374,7 +379,7 @@
 
                 <div class="mt-10">
                     <a href="{{ route('register') }}"
-                       class="rounded-full bg-[#e8702a] px-9 py-4 text-sm font-medium text-white transition-all hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-xl hover:shadow-[#e8702a]/30 active:scale-95">
+                       class="rounded-full bg-[#e8702a] px-9 py-4 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-xl hover:shadow-[#e8702a]/30 active:scale-95">
                         Register Your Team Now
                     </a>
                 </div>
