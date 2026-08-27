@@ -49,4 +49,3 @@ class SmartCityController extends Controller
         return null;
     }
 }
-
