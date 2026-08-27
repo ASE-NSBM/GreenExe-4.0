@@ -39,12 +39,18 @@ Fill in the Supabase block in `.env` (Project Settings → Database) and switch 
 ```env
 DB_CONNECTION=pgsql
 DB_HOST=aws-0-<region>.pooler.supabase.com
-DB_PORT=6543
+DB_PORT=5432
 DB_DATABASE=postgres
 DB_USERNAME=postgres.<project-ref>
 DB_PASSWORD=<password>
 DB_SSLMODE=require
 ```
+
+Use the **session** pooler on port 5432. The transaction pooler (6543) breaks
+PDO prepared statements, and the direct `db.<project-ref>.supabase.co` host is
+IPv6-only, so it is unreachable from IPv4 networks. Supabase provides the
+database only — authentication is Laravel's session guard behind the Filament
+panel, and Supabase Auth is not used.
 
 Then run `php artisan migrate --seed`. Credentials live only in environment
 variables and are never committed (SRS 8.2).
