@@ -120,7 +120,7 @@
 
                         <div class="space-y-0">
                             @foreach ($purposeEntries as $index => $item)
-                                <article class="gx-reveal group relative border-t border-white/15 py-8 first:border-t-0 first:pt-0"
+                                <article class="gx-reveal group relative border-t border-white/15 py-8"
                                          data-reveal style="transition-delay: {{ 0.15 * ($index + 1) }}s">
                                     <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full" aria-hidden="true"></span>
 
@@ -250,12 +250,13 @@
 
                 <div class="mt-14 grid gap-8 md:grid-cols-2">
                     {{-- Eligibility --}}
-                    <div class="gx-reveal border-t border-white/15 pt-8" data-reveal>
+                    <div class="gx-reveal group relative border-t border-white/15 pt-8" data-reveal>
+                        <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-eco-lime to-transparent transition-all duration-700 group-hover:w-full" aria-hidden="true"></span>
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-eco-lime">01</span>
                             <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">Eligibility Criteria</span>
                         </div>
-                        <h3 class="mt-2 text-2xl font-medium text-white" style="letter-spacing: -0.04em">
+                        <h3 class="mt-2 text-2xl font-medium text-white transition-colors duration-300 group-hover:text-eco-lime" style="letter-spacing: -0.04em">
                             Participant Eligibility
                         </h3>
                         <ul class="mt-4 space-y-3 text-sm leading-relaxed text-white/75">
@@ -275,12 +276,13 @@
                     </div>
 
                     {{-- Rules & Requirements --}}
-                    <div class="gx-reveal border-t border-white/15 pt-8" data-reveal style="transition-delay: 0.15s">
+                    <div class="gx-reveal group relative border-t border-white/15 pt-8" data-reveal style="transition-delay: 0.15s">
+                        <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full" aria-hidden="true"></span>
                         <div class="flex items-baseline gap-4">
                             <span class="font-playfair text-sm italic text-cyan-tech">02</span>
                             <span class="text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">Competition Rules</span>
                         </div>
-                        <h3 class="mt-2 text-2xl font-medium text-white" style="letter-spacing: -0.04em">
+                        <h3 class="mt-2 text-2xl font-medium text-white transition-colors duration-300 group-hover:text-cyan-tech" style="letter-spacing: -0.04em">
                             Rules &amp; Requirements
                         </h3>
                         <ul class="mt-4 space-y-3 text-sm leading-relaxed text-white/75">
