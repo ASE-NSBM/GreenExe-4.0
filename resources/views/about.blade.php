@@ -6,27 +6,62 @@
     <div class="relative w-full tracking-[-0.02em]">
 
         {{-- =========================================================================
-             1. FR-8: GreenExE 4.0 Introduction & Hero
+             1. FR-8: GreenExE 4.0 Introduction & Full-Height Animated Hero
              ========================================================================= --}}
-        <section class="relative mx-auto max-w-6xl px-6 pt-32 pb-16 sm:px-10 md:pt-40 md:pb-24">
-            <div class="max-w-3xl">
-                <p class="hero-anim hero-fade text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech"
-                   style="animation-delay: 0.1s">
-                    {{ config('greenexe.event.name') }} &bull; Complete Competition Specification
-                </p>
+        <section class="relative min-h-[100dvh] w-full overflow-hidden bg-dark-navy flex items-center px-6 pt-32 pb-20 sm:px-10 md:pt-36 md:pb-24">
+            {{-- Right-Side Kinetic Geometric Modular Wave Pattern (Pure SVG & CSS Code) --}}
+            <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-full md:w-3/5 overflow-hidden flex justify-end gap-3 sm:gap-4 md:gap-6 pr-0 sm:pr-4 md:pr-10 opacity-30 md:opacity-90" aria-hidden="true">
+                @for ($col = 1; $col <= 4; $col++)
+                    <div class="gx-wave-col-{{ $col }} flex flex-col gap-3 sm:gap-4 md:gap-5 shrink-0 -mt-28">
+                        @for ($row = 0; $row < 8; $row++)
+                            <svg class="h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44 drop-shadow-[0_10px_30px_rgba(196,249,52,0.15)]"
+                                 viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 0,38 C 0,16 16,0 38,0 L 70,0 C 88,0 98,12 110,30 C 124,52 134,84 140,110 L 140,140 L 102,140 C 84,140 74,128 62,110 C 48,88 38,56 30,38 C 24,20 12,20 0,38 Z"
+                                      fill="#c4f934" />
+                            </svg>
+                        @endfor
+                    </div>
+                @endfor
+                {{-- Scrim gradients to guarantee absolute text contrast and soft blending --}}
+                <div class="absolute inset-0 bg-gradient-to-r from-dark-navy via-dark-navy/60 to-transparent" aria-hidden="true"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-transparent to-dark-navy/70" aria-hidden="true"></div>
+            </div>
 
-                <h1 class="mt-4 leading-[0.95] text-white">
-                    <span class="hero-anim hero-reveal block font-playfair text-5xl font-normal italic sm:text-7xl md:text-8xl"
-                          style="letter-spacing: -0.05em; animation-delay: 0.25s">About</span>
-                    <span class="hero-anim hero-reveal -mt-1 block text-5xl font-normal sm:text-7xl md:text-8xl"
-                          style="letter-spacing: -0.08em; animation-delay: 0.42s">{{ config('greenexe.event.name') }}</span>
-                </h1>
+            <div class="relative z-10 mx-auto w-full max-w-6xl my-auto">
+                <div class="max-w-2xl">
+                    <div class="hero-anim hero-fade inline-flex items-center rounded-full border border-cyan-tech/30 bg-cyan-tech/10 px-4 py-1.5 backdrop-blur-md"
+                         style="animation-delay: 0.1s">
+                        <p class="text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">
+                            {{ config('greenexe.event.name') }} &bull; Competition Brief
+                        </p>
+                    </div>
 
-                <p class="hero-anim hero-fade mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
-                   style="animation-delay: 0.6s">
-                    {{ config('greenexe.event.tagline') }} Organized by the {{ config('greenexe.event.organizer') }}
-                    under the {{ config('greenexe.event.brand') }} brand at {{ config('greenexe.event.university') }}.
-                </p>
+                    <h1 class="mt-6 leading-[0.92] text-white">
+                        <span class="hero-anim hero-reveal block font-playfair text-5xl font-normal italic sm:text-7xl md:text-8xl"
+                              style="letter-spacing: -0.05em; animation-delay: 0.25s">About</span>
+                        <span class="hero-anim hero-reveal -mt-1 block text-5xl font-normal sm:text-7xl md:text-8xl"
+                              style="letter-spacing: -0.08em; animation-delay: 0.42s">{{ config('greenexe.event.name') }}</span>
+                    </h1>
+
+                    <p class="hero-anim hero-fade mt-6 text-base leading-relaxed text-white/80 sm:text-lg md:text-xl"
+                       style="animation-delay: 0.6s">
+                        {{ config('greenexe.event.tagline') }} Organized by the {{ config('greenexe.event.organizer') }}
+                        under the {{ config('greenexe.event.brand') }} brand at {{ config('greenexe.event.university') }}.
+                    </p>
+
+                    <div class="hero-anim hero-fade mt-8 flex flex-wrap items-center gap-4"
+                         style="animation-delay: 0.75s">
+                        <a href="{{ route('register') }}"
+                           class="rounded-full bg-[#e8702a] px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-xl hover:shadow-[#e8702a]/30 active:scale-95">
+                            Register Your Team
+                        </a>
+                        <a href="#purpose"
+                           class="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-cyan-tech hover:text-cyan-tech">
+                            <span>Explore Details</span>
+                            <span class="transition-transform duration-300 group-hover:translate-y-0.5">&darr;</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 

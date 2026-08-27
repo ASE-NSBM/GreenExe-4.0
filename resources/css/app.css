@@ -166,6 +166,41 @@
     }
 }
 
+/* Kinetic Geometric Wave Pattern (Module 3 Hero) */
+@keyframes gx-wave-col {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-24px);
+    }
+}
+
+.gx-wave-col-1 {
+    animation: gx-wave-col 7s ease-in-out infinite;
+}
+
+.gx-wave-col-2 {
+    animation: gx-wave-col 7s ease-in-out 1.2s infinite;
+}
+
+.gx-wave-col-3 {
+    animation: gx-wave-col 7s ease-in-out 2.4s infinite;
+}
+
+.gx-wave-col-4 {
+    animation: gx-wave-col 7s ease-in-out 3.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-wave-col-1,
+    .gx-wave-col-2,
+    .gx-wave-col-3,
+    .gx-wave-col-4 {
+        animation: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .gx-grid-bg {
         animation: none;
