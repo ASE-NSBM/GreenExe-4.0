@@ -9,14 +9,14 @@
 @endphp
 
 @section('content')
-    <section class="mx-auto max-w-4xl px-4 py-20 sm:py-24">
-        <div class="gx-reveal text-center" data-reveal>
-            <p class="font-display text-sm font-semibold uppercase tracking-[0.3em] text-cyan-tech">Contact</p>
-            <h1 class="mt-3 font-display text-4xl font-bold text-white">Get in touch with {{ $org['short_name'] }}</h1>
-            <p class="mx-auto mt-4 max-w-2xl text-light-gray/70">
-                Questions about {{ config('greenexe.event.name') }}? Reach the {{ $org['name'] }} team through any of the channels below.
-            </p>
-        </div>
+    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
+        @include('partials.page-header', [
+            'eyebrow' => 'Contact',
+            'titleItalic' => 'Get in touch',
+            'title' => 'with '.$org['short_name'],
+            'lead' => 'Questions about '.config('greenexe.event.name').'? Reach the '.$org['name'].' team through any of the channels below.',
+            'center' => true,
+        ])
 
         <div class="mt-12 grid gap-4 sm:grid-cols-3">
             @php
@@ -48,7 +48,7 @@
         </div>
 
         <div class="gx-reveal mt-10 text-center" data-reveal>
-            <h2 class="font-display text-xl font-semibold text-white">Follow {{ $org['short_name'] }}</h2>
+            <h2 class="gx-card-title text-xl font-medium text-white">Follow {{ $org['short_name'] }}</h2>
             <p class="mt-2 text-sm text-light-gray/60">Events, workshops and announcements as they happen.</p>
             <div class="mt-5 flex justify-center">
                 @include('partials.social-links')

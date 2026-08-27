@@ -3,23 +3,25 @@
 @section('title', 'Competition — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-5xl px-4 py-20">
-        <h1 class="font-display text-4xl font-bold text-white">Competition Information</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">
-            Everything you need to know before registering your team and project.
-        </p>
+    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
+        @include('partials.page-header', [
+            'eyebrow' => 'Competition',
+            'titleItalic' => 'Everything',
+            'title' => 'you need to know',
+            'lead' => 'Read this before registering your team and project.',
+        ])
 
         <div class="mt-12 space-y-10">
             @forelse ($sections as $section => $items)
-                <div>
-                    <h2 class="font-display text-2xl font-semibold text-cyan-tech">
+                <div class="gx-reveal" data-reveal>
+                    <h2 class="gx-group-label text-2xl font-normal text-white sm:text-3xl">
                         {{ Str::headline($section) }}
                     </h2>
                     <div class="mt-4 space-y-4">
                         @foreach ($items as $item)
-                            <article class="gx-card">
-                                <h3 class="font-display text-lg font-semibold text-white">{{ $item->title }}</h3>
-                                <p class="mt-2 whitespace-pre-line text-light-gray/75">{{ $item->body }}</p>
+                            <article class="gx-card gx-reveal" data-reveal>
+                                <h3 class="gx-card-title text-lg font-medium text-white">{{ $item->title }}</h3>
+                                <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/75 md:text-base">{{ $item->body }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -30,12 +32,12 @@
         </div>
 
         <div class="mt-12 grid gap-4 sm:grid-cols-2">
-            <a href="{{ route('rules') }}" class="gx-card block transition hover:border-cyan-tech/40">
-                <h3 class="font-display text-lg font-semibold text-white">Rules &amp; eligibility</h3>
+            <a href="{{ route('rules') }}" class="gx-card gx-reveal block transition hover:-translate-y-1 hover:border-cyan-tech/40" data-reveal>
+                <h3 class="gx-card-title text-lg font-medium text-white">Rules &amp; eligibility</h3>
                 <p class="mt-2 text-sm text-light-gray/70">Who can enter, team requirements and disqualification conditions.</p>
             </a>
-            <a href="{{ route('register') }}" class="gx-card block transition hover:border-fresh-green/40">
-                <h3 class="font-display text-lg font-semibold text-white">Register your team</h3>
+            <a href="{{ route('register') }}" class="gx-card gx-reveal block transition hover:-translate-y-1 hover:border-fresh-green/40" data-reveal style="transition-delay: 0.08s">
+                <h3 class="gx-card-title text-lg font-medium text-white">Register your team</h3>
                 <p class="mt-2 text-sm text-light-gray/70">Submit team and project information online.</p>
             </a>
         </div>

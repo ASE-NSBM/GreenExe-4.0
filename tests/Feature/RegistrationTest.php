@@ -46,7 +46,8 @@ class RegistrationTest extends TestCase
     {
         $this->get(route('register'))
             ->assertOk()
-            ->assertSee('Team &amp; Project Registration', false);
+            ->assertSee('project entry', false)
+            ->assertSee('data-registration-form', false);
     }
 
     public function test_valid_registration_is_stored_and_confirmed(): void
@@ -73,8 +74,11 @@ class RegistrationTest extends TestCase
         $payload['members'][0]['email'] = 'not-an-email';
 
         $this->post(route('register.store'), $payload)
-            ->assertSessionHasErrors(['team_name', 'members.0.email'])
-            ->followRedirects()
+            ->assertSessionHasErrors(['team_name', 'members.0.email']);
+
+        $this->from(route('register'))
+            ->followingRedirects()
+            ->post(route('register.store'), $payload)
             ->assertSee('The email field must be a valid email address.')
             ->assertDontSee('members.0');
 

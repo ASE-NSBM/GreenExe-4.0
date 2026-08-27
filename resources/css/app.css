@@ -431,3 +431,23 @@
         opacity: 0.2;
     }
 }
+
+/*
+| Shared page furniture. Content pages use the same card and heading treatment
+| as the home panels so the site reads as one design.
+*/
+.gx-section {
+    letter-spacing: -0.02em;
+}
+
+/* Group label above a run of cards, e.g. "Eligibility requirements". */
+.gx-group-label {
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
+    font-style: italic;
+    letter-spacing: -0.03em;
+}
+
+/* Card heading, matching the home panels: Inter, medium, tight. */
+.gx-card-title {
+    letter-spacing: -0.04em;
+}

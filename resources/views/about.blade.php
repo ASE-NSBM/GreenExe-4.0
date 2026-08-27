@@ -3,20 +3,24 @@
 @section('title', 'About '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-5xl px-4 py-20">
+    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
         {{-- FR-8, FR-9 --}}
-        <h1 class="font-display text-4xl font-bold text-white">About {{ config('greenexe.event.name') }}</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">{{ config('greenexe.event.tagline') }}</p>
+        @include('partials.page-header', [
+            'eyebrow' => config('greenexe.event.name'),
+            'titleItalic' => 'About the',
+            'title' => 'competition',
+            'lead' => config('greenexe.event.tagline'),
+        ])
 
         <div class="mt-12 space-y-6">
             @forelse ($sections->flatten() as $section)
-                <article class="gx-card">
-                    <h2 class="font-display text-xl font-semibold text-white">{{ $section->title }}</h2>
-                    <p class="mt-3 whitespace-pre-line text-light-gray/75">{{ $section->body }}</p>
+                <article class="gx-card gx-reveal" data-reveal>
+                    <h2 class="gx-card-title text-xl font-medium text-white">{{ $section->title }}</h2>
+                    <p class="mt-3 whitespace-pre-line text-sm leading-relaxed text-white/75 md:text-base">{{ $section->body }}</p>
                 </article>
             @empty
                 <article class="gx-card">
-                    <h2 class="font-display text-xl font-semibold text-white">Competition purpose</h2>
+                    <h2 class="gx-card-title text-xl font-medium text-white">Competition purpose</h2>
                     <p class="mt-3 text-light-gray/75">
                         Competition content is managed from the administrator dashboard and will appear here once published.
                     </p>
@@ -25,8 +29,8 @@
         </div>
 
         {{-- FR-10 --}}
-        <div class="mt-12 gx-card border-cyan-tech/30">
-            <h2 class="font-display text-xl font-semibold text-white">The Smart Green City concept</h2>
+        <div class="gx-reveal mt-12 gx-card border-cyan-tech/30" data-reveal>
+            <h2 class="gx-card-title text-xl font-medium text-white">The Smart Green City concept</h2>
             <p class="mt-3 text-light-gray/75">
                 {{ config('greenexe.event.university') }} is the inspiration for an enhanced smart-city environment:
                 smart buildings, green landscapes, clean energy, intelligent mobility, connected services and
@@ -36,9 +40,9 @@
         </div>
 
         {{-- FR-11, FR-12 --}}
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <div class="gx-reveal mt-6 grid gap-6 md:grid-cols-2" data-reveal>
             <div class="gx-card">
-                <h2 class="font-display text-xl font-semibold text-white">Eligibility &amp; rules</h2>
+                <h2 class="gx-card-title text-xl font-medium text-white">Eligibility &amp; rules</h2>
                 <p class="mt-3 text-light-gray/75">
                     Eligibility, team requirements and participation rules are listed in full on the rules page.
                 </p>
@@ -47,7 +51,7 @@
 
             {{-- FR-13 --}}
             <div class="gx-card">
-                <h2 class="font-display text-xl font-semibold text-white">Participant benefits</h2>
+                <h2 class="gx-card-title text-xl font-medium text-white">Participant benefits</h2>
                 <ul class="mt-3 space-y-2 text-light-gray/75">
                     <li>• Industry exposure and mentorship opportunities</li>
                     <li>• Recognition for sustainable innovation</li>
@@ -60,7 +64,7 @@
         {{-- FR-14 --}}
         @if ($faqs->isNotEmpty())
             <div class="mt-12">
-                <h2 class="font-display text-2xl font-semibold text-white">Frequently asked questions</h2>
+                <h2 class="gx-card-title text-2xl font-medium text-white">Frequently asked questions</h2>
                 <div class="mt-6 space-y-3" data-accordion>
                     @foreach ($faqs as $faq)
                         @include('partials.faq-item', ['faq' => $faq])

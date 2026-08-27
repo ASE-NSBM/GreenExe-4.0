@@ -3,18 +3,23 @@
 @section('title', 'Registration Confirmed — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-4xl px-4 py-20">
-        <div class="gx-card border-fresh-green/40 text-center print:border-none">
+    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
+        <div class="gx-card gx-reveal border-fresh-green/40 text-center print:border-none" data-reveal>
             <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-fresh-green/20 text-2xl">✅</div>
-            <h1 class="mt-6 font-display text-3xl font-bold text-white">Registration confirmed</h1>
-            <p class="mt-3 text-light-gray/75">
+            <h1 class="mt-6 leading-[0.95] text-white">
+                <span class="block font-playfair text-4xl font-normal italic sm:text-5xl"
+                      style="letter-spacing: -0.05em">Registration</span>
+                <span class="-mt-1 block text-4xl font-normal sm:text-5xl"
+                      style="letter-spacing: -0.08em">confirmed</span>
+            </h1>
+            <p class="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-white/75 md:text-base">
                 Your team is registered for {{ config('greenexe.event.name') }}. Keep the reference below — it identifies
                 your submission in all organiser communication.
             </p>
 
             {{-- FR-39 --}}
-            <p class="mt-8 text-sm uppercase tracking-widest text-cyan-tech">Registration reference</p>
-            <p class="mt-2 font-display text-3xl font-bold tracking-wider text-eco-lime">
+            <p class="mt-10 text-xs font-medium uppercase tracking-[0.3em] text-cyan-tech">Registration reference</p>
+            <p class="mt-3 font-playfair text-4xl font-normal italic tracking-tight text-eco-lime">
                 {{ $registration->registration_code }}
             </p>
 
@@ -28,7 +33,7 @@
         {{-- FR-40 --}}
         <div class="mt-8 grid gap-6 md:grid-cols-2">
             <article class="gx-card">
-                <h2 class="font-display text-lg font-semibold text-white">Team</h2>
+                <h2 class="gx-card-title text-lg font-medium text-white">Team</h2>
                 <dl class="mt-4 space-y-2 text-sm">
                     <div class="flex justify-between gap-4">
                         <dt class="text-light-gray/60">Team name</dt>
@@ -56,7 +61,7 @@
             </article>
 
             <article class="gx-card">
-                <h2 class="font-display text-lg font-semibold text-white">Project</h2>
+                <h2 class="gx-card-title text-lg font-medium text-white">Project</h2>
                 <dl class="mt-4 space-y-3 text-sm">
                     <div>
                         <dt class="text-light-gray/60">Title</dt>
