@@ -3,14 +3,16 @@
 @section('title', 'FAQ — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
+    @include('partials.page-hero', [
+        'image' => 'assets/img/section2.jpg',
+        'eyebrow' => 'Answers',
+        'titleItalic' => 'Frequently',
+        'title' => 'asked questions',
+        'lead' => 'Common questions from '.config('greenexe.event.name').' participants.',
+    ])
+
+    <section class="gx-section mx-auto max-w-4xl px-6 pb-24">
         {{-- FR-53, FR-54 --}}
-        @include('partials.page-header', [
-            'eyebrow' => 'Answers',
-            'titleItalic' => 'Frequently',
-            'title' => 'asked questions',
-            'lead' => 'Common questions from '.config('greenexe.event.name').' participants.',
-        ])
 
         <div class="gx-reveal mt-12 space-y-3" data-accordion data-reveal>
             @forelse ($faqs as $faq)

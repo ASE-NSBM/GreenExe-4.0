@@ -3,14 +3,16 @@
 @section('title', 'Register — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
-        @include('partials.page-header', [
-            'eyebrow' => config('greenexe.registration.open') ? 'Registration open' : 'Registration closed',
-            'titleItalic' => 'Team &',
-            'title' => 'project entry',
-            'lead' => 'Every field marked with an asterisk is required. Your information is only visible to the '.config('greenexe.event.name').' organisers.',
-            'center' => true,
-        ])
+    @include('partials.page-hero', [
+        'image' => 'assets/video/ready-to-compete-poster.jpg',
+        'eyebrow' => config('greenexe.registration.open') ? 'Registration open' : 'Registration closed',
+        'titleItalic' => 'Team &',
+        'title' => 'project entry',
+        'lead' => 'Every field marked with an asterisk is required. Your information is only visible to the '.config('greenexe.event.name').' organisers.',
+        'center' => true,
+    ])
+
+    <section class="gx-section mx-auto max-w-4xl px-6 pb-24">
 
         {{-- Progress indicator (SRS 9.5) --}}
         <ol class="gx-reveal mt-12 flex flex-wrap items-center justify-center gap-3 text-sm" aria-label="Registration steps" data-reveal>

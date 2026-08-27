@@ -9,14 +9,16 @@
 @endphp
 
 @section('content')
-    <section class="gx-section mx-auto max-w-4xl px-6 py-24 sm:px-10 md:px-14">
-        @include('partials.page-header', [
-            'eyebrow' => 'Contact',
-            'titleItalic' => 'Get in touch',
-            'title' => 'with '.$org['short_name'],
-            'lead' => 'Questions about '.config('greenexe.event.name').'? Reach the '.$org['name'].' team through any of the channels below.',
-            'center' => true,
-        ])
+    @include('partials.page-hero', [
+        'image' => 'assets/img/highlights/connected-digital-services.jpg',
+        'eyebrow' => 'Contact',
+        'titleItalic' => 'Get in touch',
+        'title' => 'with '.$org['short_name'],
+        'lead' => 'Questions about '.config('greenexe.event.name').'? Reach the '.$org['name'].' team through any of the channels below.',
+        'center' => true,
+    ])
+
+    <section class="gx-section mx-auto max-w-4xl px-6 pb-24">
 
         <div class="mt-12 grid gap-4 sm:grid-cols-3">
             @php

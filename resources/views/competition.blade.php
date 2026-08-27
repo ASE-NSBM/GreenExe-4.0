@@ -3,13 +3,15 @@
 @section('title', 'Competition — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="gx-section mx-auto max-w-5xl px-6 py-24 sm:px-10 md:px-14">
-        @include('partials.page-header', [
-            'eyebrow' => 'Competition',
-            'titleItalic' => 'Everything',
-            'title' => 'you need to know',
-            'lead' => 'Read this before registering your team and project.',
-        ])
+    @include('partials.page-hero', [
+        'image' => 'assets/img/bg1.jpeg',
+        'eyebrow' => 'Competition',
+        'titleItalic' => 'Everything',
+        'title' => 'you need to know',
+        'lead' => 'Read this before registering your team and project.',
+    ])
+
+    <section class="gx-section mx-auto max-w-5xl px-6 pb-24">
 
         <div class="mt-12 space-y-10">
             @forelse ($sections as $section => $items)
