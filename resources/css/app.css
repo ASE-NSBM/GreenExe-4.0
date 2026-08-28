@@ -195,6 +195,87 @@
     @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
 }
 
+/* Organizer module (Module 4) --------------------------------------------
+|
+| A small kit for the About the Organizer / Contact section: a glowing brand
+| mark, tappable info and social buttons, and an animated link underline. All
+| motion is disabled under prefers-reduced-motion at the end of this file's
+| existing media queries pattern.
+*/
+
+/* Rounded action button used by the info and social rows. */
+@utility gx-icon-btn {
+    @apply inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10
+           bg-white/5 text-light-gray transition duration-200
+           hover:-translate-y-0.5 hover:border-cyan-tech/60 hover:bg-cyan-tech/10 hover:text-cyan-tech
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-tech;
+}
+
+/* Brand mark halo. The glow breathes so the logo reads as the anchor of the
+   section without needing a real logo file yet. */
+.gx-logo-glow {
+    position: relative;
+}
+
+.gx-logo-glow::after {
+    content: '';
+    position: absolute;
+    inset: -18%;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 50%, rgba(53, 208, 200, 0.45), transparent 70%);
+    filter: blur(14px);
+    z-index: -1;
+    animation: gx-logo-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes gx-logo-pulse {
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(0.96);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.06);
+    }
+}
+
+/* Link that grows an underline from the left on hover/focus. */
+.gx-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size 0.25s ease;
+}
+
+.gx-underline:hover,
+.gx-underline:focus-visible {
+    background-size: 100% 1.5px;
+}
+
+/* Gentle float for the floating identity card. */
+.gx-float {
+    animation: gx-float 6s ease-in-out infinite;
+}
+
+@keyframes gx-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-logo-glow::after,
+    .gx-float {
+        animation: none;
+    }
+}
+
 /* Subtle animated smart-city grid background (SRS 9.2) */
 .gx-grid-bg {
     background-image:
@@ -210,6 +291,41 @@
     }
     to {
         background-position: 56px 56px;
+    }
+}
+
+/* Kinetic Geometric Wave Pattern (Module 3 Hero) */
+@keyframes gx-wave-col {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-24px);
+    }
+}
+
+.gx-wave-col-1 {
+    animation: gx-wave-col 7s ease-in-out infinite;
+}
+
+.gx-wave-col-2 {
+    animation: gx-wave-col 7s ease-in-out 1.2s infinite;
+}
+
+.gx-wave-col-3 {
+    animation: gx-wave-col 7s ease-in-out 2.4s infinite;
+}
+
+.gx-wave-col-4 {
+    animation: gx-wave-col 7s ease-in-out 3.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gx-wave-col-1,
+    .gx-wave-col-2,
+    .gx-wave-col-3,
+    .gx-wave-col-4 {
+        animation: none;
     }
 }
 
@@ -477,4 +593,24 @@
     .gx-slide:hover .gx-watermark {
         opacity: 0.2;
     }
+}
+
+/*
+| Shared page furniture. Content pages use the same card and heading treatment
+| as the home panels so the site reads as one design.
+*/
+.gx-section {
+    letter-spacing: -0.02em;
+}
+
+/* Group label above a run of cards, e.g. "Eligibility requirements". */
+.gx-group-label {
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
+    font-style: italic;
+    letter-spacing: -0.03em;
+}
+
+/* Card heading, matching the home panels: Inter, medium, tight. */
+.gx-card-title {
+    letter-spacing: -0.04em;
 }

@@ -9,18 +9,15 @@
         ['route' => 'organizer', 'label' => 'Organizer'],
     ];
 
-    // The home page opens on a full-bleed hero, so the bar floats over it.
-    // Every other page keeps the solid sticky bar.
+    // The floating glassmorphic navigation bar is used consistently across pages.
     $overlay = request()->routeIs('home');
 @endphp
 
 @if ($overlay)
-    <header class="home-nav fixed top-0 left-0 right-0 z-[100]">
+    <header class="fixed top-0 left-0 right-0 z-100">
         <nav class="relative flex items-center justify-between p-4 sm:p-5" aria-label="Main navigation">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                 <img src="{{ asset('assets/img/logo-bgremoved.png') }}"
-                     alt="{{ config('greenexe.event.name') }}"
-                     class="h-7 w-28 object-contain object-center sm:h-8 sm:w-40">
+                <img src="{{ asset('assets/img/logo-bgremoved.png') }}" alt="{{ config('greenexe.event.name') }}" class="h-7 w-28 object-contain object-center sm:h-8 sm:w-40">
             </a>
 
             <ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-white/30 bg-white/20 px-2 py-2 backdrop-blur-md xl:flex">
@@ -35,10 +32,16 @@
             </ul>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('register') }}"
-                   class="hidden rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100 xl:block">
-                    Register Now
-                </a>
+                @unless (request()->routeIs('about'))
+                    <a href="{{ route('register') }}"
+                       class="gx-btn-primary hidden sm:inline-flex">
+                        Register Now
+                    </a>
+                @else
+                    <span class="gx-btn-primary hidden sm:inline-flex invisible pointer-events-none" aria-hidden="true">
+                        Register Now
+                    </span>
+                @endunless
                 <button type="button"
                         class="rounded-full border border-white/30 bg-white/20 p-2 text-white backdrop-blur-md xl:hidden"
                         data-mobile-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation">
@@ -58,17 +61,17 @@
                         </a>
                     </li>
                 @endforeach
-                <li><a href="{{ route('register') }}" class="gx-btn-primary w-full">Register Now</a></li>
+                @unless (request()->routeIs('about'))
+                    <li><a href="{{ route('register') }}" class="gx-btn-primary w-full">Register Now</a></li>
+                @endunless
             </ul>
         </div>
     </header>
 @else
-    <header class="site-nav sticky top-0 z-40 border-b border-white/10 backdrop-blur-lg">
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-dark-navy/80 backdrop-blur-lg">
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4" aria-label="Main navigation">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                 <img src="{{ asset('assets/img/logo-bgremoved.png') }}"
-                     alt="{{ config('greenexe.event.name') }}"
-                     class="h-7 w-28 object-contain object-center sm:h-8 sm:w-40">
+                <img src="{{ asset('assets/img/logo-bgremoved.png') }}" alt="{{ config('greenexe.event.name') }}" class="h-7 w-28 object-contain object-center sm:h-8 sm:w-40">
             </a>
 
             <ul class="site-nav-links hidden items-center gap-1 rounded-full border px-2 py-2 lg:flex">

@@ -28,7 +28,7 @@
 
     {{-- Step 1 — Team (FR-23, FR-24) --}}
     <fieldset class="gx-card">
-        <legend class="font-display text-xl font-semibold text-white">1. Team</legend>
+        <legend class="gx-card-title text-xl font-medium text-white">1. Team</legend>
 
         <div class="mt-6 grid gap-5 sm:grid-cols-2">
             <div>
@@ -52,7 +52,7 @@
 
     {{-- Step 2 — Members (FR-25, FR-26) --}}
     <fieldset class="gx-card">
-        <legend class="font-display text-xl font-semibold text-white">2. Team members</legend>
+        <legend class="gx-card-title text-xl font-medium text-white">2. Team members</legend>
         <p class="mt-2 text-sm text-light-gray/60">
             Member 1 is the team leader and is the organisers' point of contact for the team.
         </p>
@@ -79,7 +79,7 @@
 
                 <div class="rounded-xl border p-5 {{ $i === 0 ? 'border-cyan-tech/40 bg-cyan-tech/5' : 'border-white/10 bg-dark-navy/40' }}"
                      data-member-card data-member-index="{{ $i }}" @if ($memberHasError) data-member-error @endif>
-                    <h3 class="flex flex-wrap items-center gap-3 font-display text-base font-semibold text-cyan-tech">
+                    <h3 class="gx-card-title flex flex-wrap items-center gap-3 text-base font-medium text-cyan-tech">
                         Member {{ $i + 1 }}
 
                         @if ($i === 0)
@@ -121,14 +121,18 @@
                         <div>
                             <label class="gx-label" for="members_{{ $i }}_contact_number">Contact number <span class="text-red-300">*</span></label>
                             <input id="members_{{ $i }}_contact_number" name="members[{{ $i }}][contact_number]" type="tel"
-                                   class="gx-input" value="{{ old("members.$i.contact_number") }}" placeholder="0771234567">
+                                   class="gx-input" value="{{ old("members.$i.contact_number") }}" placeholder="0771234567"
+                                   inputmode="numeric" autocomplete="tel" required minlength="10" maxlength="10"
+                                   pattern="07[0-9]{8}">
                             @error("members.$i.contact_number") <p class="gx-error">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label class="gx-label" for="members_{{ $i }}_whatsapp_number">WhatsApp number <span class="text-red-300">*</span></label>
                             <input id="members_{{ $i }}_whatsapp_number" name="members[{{ $i }}][whatsapp_number]" type="tel"
-                                   class="gx-input" value="{{ old("members.$i.whatsapp_number") }}" placeholder="0771234567">
+                                   class="gx-input" value="{{ old("members.$i.whatsapp_number") }}" placeholder="0771234567"
+                                   inputmode="numeric" autocomplete="tel" required minlength="10" maxlength="10"
+                                   pattern="07[0-9]{8}">
                             @error("members.$i.whatsapp_number") <p class="gx-error">{{ $message }}</p> @enderror
                         </div>
                     </div>
@@ -158,7 +162,7 @@
 
     {{-- Step 3 — Project (FR-27 to FR-31) --}}
     <fieldset class="gx-card">
-        <legend class="font-display text-xl font-semibold text-white">3. Project</legend>
+        <legend class="gx-card-title text-xl font-medium text-white">3. Project</legend>
 
         <div class="mt-6 space-y-5">
             <div class="grid gap-5 sm:grid-cols-2">
@@ -205,7 +209,7 @@
 
     {{-- Step 4 — Declaration --}}
     <fieldset class="gx-card">
-        <legend class="font-display text-xl font-semibold text-white">4. Declaration</legend>
+        <legend class="gx-card-title text-xl font-medium text-white">4. Declaration</legend>
 
         <label class="mt-6 flex items-start gap-3 text-sm text-light-gray/80" for="declaration">
             <input id="declaration" name="declaration" type="checkbox" value="1"

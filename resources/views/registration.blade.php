@@ -3,14 +3,19 @@
 @section('title', 'Register — '.config('greenexe.event.name'))
 
 @section('content')
-    <section class="mx-auto max-w-4xl px-4 py-16">
-        <x-page-header
-            eyebrow="Enter the challenge"
-            title="Team &amp; Project Registration"
-            :description="'All fields are required. Your information is only visible to the '.config('greenexe.event.name').' organisers.'" />
+    @include('partials.page-hero', [
+        'image' => 'assets/video/ready-to-compete-poster.jpg',
+        'eyebrow' => config('greenexe.registration.open') ? 'Registration open' : 'Registration closed',
+        'titleItalic' => 'Team &',
+        'title' => 'project entry',
+        'lead' => 'Every field marked with an asterisk is required. Your information is only visible to the '.config('greenexe.event.name').' organisers.',
+        'center' => true,
+    ])
+
+    <section class="gx-section mx-auto max-w-4xl px-6 pb-24">
 
         {{-- Progress indicator (SRS 9.5) --}}
-        <ol class="mt-10 flex flex-wrap items-center gap-3 text-sm" aria-label="Registration steps">
+        <ol class="gx-reveal mt-12 flex flex-wrap items-center justify-center gap-3 text-sm" aria-label="Registration steps" data-reveal>
             @foreach (['Team', 'Members', 'Project', 'Submit'] as $index => $step)
                 <li class="flex items-center gap-2">
                     <span class="grid h-7 w-7 place-items-center rounded-full bg-white/10 text-xs font-semibold text-cyan-tech">{{ $index + 1 }}</span>

@@ -25,9 +25,43 @@ function initAccordions() {
             const icon = trigger.querySelector('[data-accordion-icon]');
             if (!panel) return;
 
-            const open = panel.classList.toggle('hidden') === false;
+            const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+            const open = !isExpanded;
+
+            // When opening a new FAQ, close all other open FAQs in the accordion
+            if (open) {
+                const container = trigger.closest('[data-accordion]') || document;
+                container.querySelectorAll('[data-accordion-trigger]').forEach((otherTrigger) => {
+                    if (otherTrigger !== trigger) {
+                        const otherPanel = document.getElementById(otherTrigger.getAttribute('aria-controls'));
+                        const otherIcon = otherTrigger.querySelector('[data-accordion-icon]');
+
+                        otherTrigger.setAttribute('aria-expanded', 'false');
+                        if (otherIcon) otherIcon.classList.remove('rotate-180');
+
+                        if (otherPanel) {
+                            if (otherPanel.classList.contains('grid-rows-[0fr]') || otherPanel.classList.contains('grid-rows-[1fr]')) {
+                                otherPanel.classList.remove('grid-rows-[1fr]', 'opacity-100');
+                                otherPanel.classList.add('grid-rows-[0fr]', 'opacity-0');
+                            } else {
+                                otherPanel.classList.add('hidden');
+                            }
+                        }
+                    }
+                });
+            }
+
             trigger.setAttribute('aria-expanded', String(open));
             if (icon) icon.classList.toggle('rotate-180', open);
+
+            if (panel.classList.contains('grid-rows-[0fr]') || panel.classList.contains('grid-rows-[1fr]')) {
+                panel.classList.toggle('grid-rows-[0fr]', !open);
+                panel.classList.toggle('grid-rows-[1fr]', open);
+                panel.classList.toggle('opacity-0', !open);
+                panel.classList.toggle('opacity-100', open);
+            } else {
+                panel.classList.toggle('hidden', !open);
+            }
         });
     });
 }
@@ -400,6 +434,70 @@ function initAmbientVideo() {
     videos.forEach((video) => observer.observe(video));
 }
 
+/* Organizer statistics count-up (Module 4) ------------------------------- */
+function initStatCounters() {
+    const counters = document.querySelectorAll('[data-count]');
+    if (counters.length === 0) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Split "500+" into { number: 500, suffix: '+' } so prefixes/suffixes and
+    // non-numeric values (e.g. "2015") survive the animation unchanged.
+    const parse = (raw) => {
+        const match = String(raw).match(/^(\D*)([\d.,]+)(.*)$/);
+        if (!match) return null;
+
+        return {
+            prefix: match[1],
+            target: parseFloat(match[2].replace(/,/g, '')),
+            suffix: match[3],
+        };
+    };
+
+    const run = (el) => {
+        const parts = parse(el.dataset.count);
+        if (!parts || Number.isNaN(parts.target)) return;
+
+        if (reduceMotion) {
+            el.textContent = `${parts.prefix}${parts.target}${parts.suffix}`;
+            return;
+        }
+
+        const duration = 1200;
+        let startTime = null;
+
+        const tick = (now) => {
+            if (startTime === null) startTime = now;
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+            const value = Math.round(parts.target * eased);
+
+            el.textContent = `${parts.prefix}${value}${parts.suffix}`;
+            if (progress < 1) requestAnimationFrame(tick);
+        };
+
+        requestAnimationFrame(tick);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+        counters.forEach(run);
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                run(entry.target);
+                observer.unobserve(entry.target);
+            });
+        },
+        { threshold: 0.5 },
+    );
+
+    counters.forEach((counter) => observer.observe(counter));
+}
+
 /* Validation error focus -------------------------------------------------- */
 function initErrorSummary() {
     const summary = document.querySelector('[data-error-summary]');
@@ -437,5 +535,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initHighlightCarousel();
     initAmbientVideo();
+    initStatCounters();
     initErrorSummary();
 });

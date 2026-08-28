@@ -11,7 +11,7 @@
 </head>
 <body class="min-h-screen bg-dark-navy">
     <div class="gx-grid-bg fixed inset-0 -z-10"></div>
-    <div class="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-deep-green/60 via-dark-navy to-dark-navy"></div>
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-linear-to-b from-deep-green/60 via-dark-navy to-dark-navy"></div>
 
     @include('partials.nav')
 

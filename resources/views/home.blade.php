@@ -276,9 +276,9 @@
 
                     <article class="gx-slide group relative flex shrink-0 flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-white/5"
                              data-carousel-slide>
-                        @if ($highlight->image)
+                        @if ($highlight->artwork())
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                 style="background-image: url('{{ $highlight->image }}')" aria-hidden="true"></div>
+                                 style="background-image: url('{{ $highlight->artwork() }}')" aria-hidden="true"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/85 to-dark-navy/30" aria-hidden="true"></div>
                         @else
                             <div class="absolute inset-0 bg-gradient-to-br {{ $tint }}" aria-hidden="true"></div>

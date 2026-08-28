@@ -22,7 +22,7 @@ class StoreRegistrationRequest extends FormRequest
     {
         $min = (int) config('greenexe.team.min_members');
         $max = (int) config('greenexe.team.max_members');
-        $phone = ['required', 'string', 'regex:/^\+?[0-9][0-9\s\-]{6,19}$/'];
+        $phone = ['required', 'string', 'regex:/^07[0-9]{8}$/'];
 
         return [
             'team_name' => ['required', 'string', 'min:3', 'max:120'],
@@ -55,9 +55,24 @@ class StoreRegistrationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'members.*.contact_number.regex' => 'Enter a valid contact number, for example 0771234567 or +94771234567.',
-            'members.*.whatsapp_number.regex' => 'Enter a valid WhatsApp number, for example 0771234567 or +94771234567.',
+            'members.*.contact_number.regex' => 'Enter a valid 10-digit contact number starting with 07.',
+            'members.*.whatsapp_number.regex' => 'Enter a valid 10-digit whatsapp number starting with 07.',
             'declaration.accepted' => 'You must accept the competition rules and declaration before submitting.',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'members.*.full_name' => 'full name',
+            'members.*.student_id' => 'student ID',
+            'members.*.email' => 'email',
+            'members.*.contact_number' => 'contact number',
+            'members.*.whatsapp_number' => 'WhatsApp number',
+            'members.*.institution' => 'institution',
         ];
     }
 
