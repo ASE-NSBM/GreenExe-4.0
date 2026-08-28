@@ -34,7 +34,7 @@
             @foreach ($cards as $i => $card)
                 <a href="{{ $card['href'] }}" @if ($card['ext']) target="_blank" rel="noopener noreferrer" @endif
                    class="gx-card gx-reveal group flex flex-col items-center gap-3 text-center transition duration-200 hover:-translate-y-1 hover:border-cyan-tech/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-tech"
-                   data-reveal style="transition-delay: {{ $i * 0.08 }}s">
+                   data-reveal data-reveal-delay="{{ $i * 0.08 }}">
                     <span class="grid h-12 w-12 place-items-center rounded-xl bg-smart-green/15 text-cyan-tech transition group-hover:bg-cyan-tech/20">
                         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $card['path'] }}"/></svg>
                     </span>

@@ -22,14 +22,14 @@
              data-hero>
 
         {{-- 1. Base plate --}}
-        <div class="hero-zoom absolute inset-0 z-10 bg-cover bg-center bg-no-repeat opacity-55"
-             style="background-image: url('{{ asset('assets/img/bg1.jpeg') }}')"
+           <div class="hero-zoom absolute inset-0 z-10 bg-cover bg-center bg-no-repeat opacity-55"
+               data-background-image="{{ asset('assets/img/bg1.jpeg') }}"
              aria-hidden="true"></div>
 
         {{-- 2. Reveal plate, unmasked until the spotlight mask is attached in JS --}}
         <canvas class="pointer-events-none absolute inset-0" style="display: none" data-hero-canvas></canvas>
-        <div class="pointer-events-none absolute inset-0 z-30 bg-cover bg-center bg-no-repeat opacity-0"
-             style="background-image: url('{{ asset('assets/img/bg2.jpeg') }}')"
+           <div class="pointer-events-none absolute inset-0 z-30 bg-cover bg-center bg-no-repeat opacity-0"
+               data-background-image="{{ asset('assets/img/bg2.jpeg') }}"
              aria-hidden="true"
              data-hero-reveal></div>
             <div class="home-hero-shade absolute inset-0 z-20" aria-hidden="true"></div>
@@ -50,7 +50,7 @@
         </div>
 
         {{-- 4. Bottom-left copy --}}
-        <div class="hero-anim hero-fade home-glass-note absolute bottom-14 left-10 z-50 hidden max-w-[260px] sm:block md:left-14"
+        <div class="hero-anim hero-fade home-glass-note absolute bottom-14 left-10 z-50 hidden max-w-65 sm:block md:left-14"
              style="animation-delay: 0.7s">
             <p class="text-sm leading-relaxed text-white/80">
                 An enhanced smart-city experience inspired by {{ config('greenexe.event.university') }}, where green
@@ -59,7 +59,7 @@
         </div>
 
         {{-- 5. Bottom-right copy and call to action --}}
-        <div class="hero-anim hero-fade home-glass-note absolute bottom-10 left-5 right-5 z-50 flex max-w-full flex-col items-start gap-4 sm:bottom-24 sm:left-auto sm:right-10 sm:max-w-[260px] sm:gap-5 md:right-14"
+        <div class="hero-anim hero-fade home-glass-note absolute bottom-10 left-5 right-5 z-50 flex max-w-full flex-col items-start gap-4 sm:bottom-24 sm:left-auto sm:right-10 sm:max-w-65 sm:gap-5 md:right-14"
              style="animation-delay: 0.85s">
             <p class="text-xs leading-relaxed text-white/80 sm:text-sm">
                 Teams of {{ config('greenexe.team.min_members') }}–{{ config('greenexe.team.max_members') }} students
@@ -108,13 +108,13 @@
     @endphp
 
     <section class="gx-panel home-section relative flex w-full flex-col overflow-hidden bg-dark-navy tracking-[-0.02em]">
-        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-             style="background-image: url('{{ asset('assets/img/section2.jpg') }}')"
+           <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+               data-background-image="{{ asset('assets/img/section2.jpg') }}"
              aria-hidden="true"></div>
 
         {{-- Two crossed gradients read as a photographic vignette: the copy side
              stays dark enough for white text while the sculpture keeps its sky. --}}
-        <div class="absolute inset-0 bg-gradient-to-r from-dark-navy/95 via-dark-navy/90 to-dark-navy/70" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-linear-to-r from-dark-navy/95 via-dark-navy/90 to-dark-navy/70" aria-hidden="true"></div>
         <div class="absolute inset-0 home-section-glow" aria-hidden="true"></div>
 
         <div class="relative flex w-full flex-1 items-center px-6 pt-24 pb-12 sm:px-10 md:px-14 md:pt-28">
@@ -156,9 +156,9 @@
                         @endphp
 
                         <article class="gx-reveal home-index-card group relative border-t border-white/15 py-5 first:border-t-0 first:pt-0 md:py-7 md:first:pt-0"
-                                 data-reveal style="transition-delay: {{ 0.1 * ($index + 1) }}s">
+                                 data-reveal data-reveal-delay="{{ 0.1 * ($index + 1) }}">
                             {{-- Hairline that draws itself in on hover. --}}
-                            <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full"
+                            <span class="absolute left-0 top-0 h-px w-0 bg-linear-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full"
                                   aria-hidden="true"></span>
 
                             <div class="flex items-baseline gap-4">
@@ -204,7 +204,7 @@
             <source src="{{ asset('assets/video/smart-city-highlights.webm') }}" type="video/webm">
             <source src="{{ asset('assets/video/smart-city-highlights.mp4') }}" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-dark-navy/70 via-dark-navy/85 to-dark-navy/95" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-linear-to-b from-dark-navy/70 via-dark-navy/85 to-dark-navy/95" aria-hidden="true"></div>
 
         <div class="relative flex w-full flex-1 flex-col pt-24 pb-10 md:pt-28 md:pb-14">
             <div class="gx-reveal flex flex-wrap items-end justify-between gap-4 px-6 sm:px-10 md:px-14" data-reveal>
@@ -278,19 +278,19 @@
                              data-carousel-slide>
                         @if ($highlight->artwork())
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                 style="background-image: url('{{ $highlight->artwork() }}')" aria-hidden="true"></div>
+                                 data-background-image="{{ $highlight->artwork() }}" aria-hidden="true"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/85 to-dark-navy/30" aria-hidden="true"></div>
                         @else
                             <div class="absolute inset-0 bg-gradient-to-br {{ $tint }}" aria-hidden="true"></div>
                             <div class="gx-grid-bg absolute inset-0 opacity-30" aria-hidden="true"></div>
-                            <span class="gx-watermark" aria-hidden="true">{{ $highlight->icon ?? '🌿' }}</span>
+                            <span class="gx-watermark" aria-hidden="true">@include('partials.feature-icon', ['index' => $index, 'class' => 'h-40 w-40'])</span>
                             <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/40 to-transparent" aria-hidden="true"></div>
                         @endif
 
                         <span class="gx-rank" aria-hidden="true">{{ $index + 1 }}</span>
 
                         <div class="relative flex h-full flex-col p-6 md:p-8">
-                            <span class="text-2xl">{{ $highlight->icon ?? '🌿' }}</span>
+                            <span class="text-fresh-green">@include('partials.feature-icon', ['index' => $index, 'class' => 'h-6 w-6'])</span>
 
                             <h3 class="mt-auto text-xl font-medium leading-tight text-white md:text-2xl"
                                 style="letter-spacing: -0.04em">
@@ -324,7 +324,7 @@
         {{-- The panel is taller than the viewport once the form is in it, so the
              video is pinned inside it rather than stretched over its full height. --}}
         <div class="absolute inset-0" aria-hidden="true">
-            <div class="sticky top-0 h-[100dvh] w-full overflow-hidden">
+            <div class="sticky top-0 h-dvh w-full overflow-hidden">
                 <video class="h-full w-full object-cover"
                        autoplay muted loop playsinline preload="metadata"
                        poster="{{ asset('assets/video/ready-to-compete-poster.jpg') }}"
@@ -335,7 +335,7 @@
                 {{-- The form scrolls the full height of this panel, so the scrim
                      stays heavy throughout rather than fading in one direction. --}}
                 <div class="absolute inset-0 bg-dark-navy/85"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-dark-navy/60 via-transparent to-dark-navy/70"></div>
+                <div class="absolute inset-0 bg-linear-to-b from-dark-navy/60 via-transparent to-dark-navy/70"></div>
             </div>
         </div>
 

@@ -48,17 +48,17 @@
                 @foreach ($smartCityPillars->take(6) as $pillar)
                     <a href="{{ route('smart-city') }}"
                        class="gx-reveal group relative flex aspect-4/3 flex-col justify-end overflow-hidden rounded-2xl border border-white/10 transition hover:border-cyan-tech/40"
-                       data-reveal style="transition-delay: {{ min($loop->index, 5) * 0.06 }}s">
+                       data-reveal data-reveal-delay="{{ min($loop->index, 5) * 0.06 }}">
                         @if ($artwork = $pillar->artwork())
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                 style="background-image: url('{{ $artwork }}')" aria-hidden="true"></div>
+                                 data-background-image="{{ $artwork }}" aria-hidden="true"></div>
                         @else
                             <div class="absolute inset-0 bg-gradient-to-br from-forest-green via-deep-green to-dark-navy" aria-hidden="true"></div>
                         @endif
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/60 to-transparent" aria-hidden="true"></div>
 
                         <div class="relative p-5">
-                            <span class="text-xl">{{ $pillar->icon ?? '🌿' }}</span>
+                            <span class="text-fresh-green">@include('partials.feature-icon', ['index' => $loop->index, 'class' => 'h-5 w-5'])</span>
                             <h3 class="gx-card-title mt-2 text-base font-medium text-white group-hover:text-cyan-tech">
                                 {{ $pillar->title }}
                             </h3>

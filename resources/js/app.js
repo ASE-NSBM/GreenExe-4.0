@@ -273,6 +273,10 @@ function initScrollReveal() {
     const targets = document.querySelectorAll('[data-reveal]');
     if (targets.length === 0) return;
 
+    targets.forEach((target) => {
+        if (target.dataset.revealDelay) target.style.transitionDelay = `${target.dataset.revealDelay}s`;
+    });
+
     if (!('IntersectionObserver' in window)) {
         targets.forEach((target) => target.classList.add('is-visible'));
         return;
@@ -291,6 +295,13 @@ function initScrollReveal() {
     );
 
     targets.forEach((target) => observer.observe(target));
+}
+
+function initBackgroundImages() {
+    document.querySelectorAll('[data-background-image]').forEach((element) => {
+        const image = element.dataset.backgroundImage;
+        if (image) element.style.backgroundImage = `url("${image}")`;
+    });
 }
 
 /* Highlight carousel ----------------------------------------------------- */
@@ -532,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMemberSections();
     initSubmitGuard();
     initHeroSpotlight();
+    initBackgroundImages();
     initScrollReveal();
     initHighlightCarousel();
     initAmbientVideo();

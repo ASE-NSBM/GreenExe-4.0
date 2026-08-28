@@ -137,7 +137,7 @@
                 <div class="grid gap-6 sm:grid-cols-3">
                     @foreach ($highlights as $i => $h)
                         <div class="gx-card gx-reveal group relative flex flex-col justify-between overflow-hidden border-cyan-tech/20 bg-gradient-to-b from-dark-navy/90 to-dark-navy/95 p-6 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-tech/60 hover:shadow-[0_15px_35px_-10px_rgba(53,208,200,0.2)]"
-                            data-reveal style="transition-delay: {{ 0.12 + $i * 0.08 }}s">
+                            data-reveal data-reveal-delay="{{ 0.12 + $i * 0.08 }}">
                             {{-- Sci-Fi Corner Brackets --}}
                             <div class="absolute top-0 left-0 h-3 w-3 border-t-2 border-l-2 border-cyan-tech/60 pointer-events-none"></div>
                             <div class="absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-cyan-tech/60 pointer-events-none"></div>
@@ -171,7 +171,7 @@
                 <div class="gx-reveal grid gap-4 grid-cols-2 lg:grid-cols-4" data-reveal>
                     @foreach ($stats as $i => $stat)
                         <div class="gx-card group relative overflow-hidden border-white/10 bg-dark-navy/70 p-6 text-center transition-all duration-300 hover:border-cyan-tech/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-tech/10"
-                            style="transition-delay: {{ $i * 0.08 }}s">
+                            data-reveal-delay="{{ $i * 0.08 }}">
                             <div class="gx-grid-bg absolute inset-0 opacity-10 pointer-events-none"></div>
                             <p class="font-display text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-fresh-green via-cyan-tech to-eco-lime drop-shadow-[0_0_15px_rgba(53,208,200,0.3)]"
                                 data-count="{{ $stat['value'] }}">{{ $stat['value'] }}</p>
@@ -271,7 +271,7 @@
                 <div class="mt-12 grid gap-6 md:grid-cols-2">
                     @foreach ($blocks as $block)
                         <article class="gx-card gx-reveal group relative overflow-hidden border-white/10 transition-all duration-300 hover:border-cyan-tech/40 hover:-translate-y-1" data-reveal
-                            style="transition-delay: {{ $loop->index * 0.08 }}s">
+                            data-reveal-delay="{{ $loop->index * 0.08 }}">
                             <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full" aria-hidden="true"></span>
                             <h3 class="font-display text-lg font-semibold text-white">{{ $block->title }}</h3>
                             <p class="mt-3 whitespace-pre-line text-sm leading-relaxed text-light-gray/75">{{ $block->body }}</p>

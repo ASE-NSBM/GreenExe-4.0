@@ -42,17 +42,17 @@
                 @endphp
 
                 <article class="gx-reveal group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 transition hover:border-cyan-tech/40"
-                         data-reveal style="transition-delay: {{ min($loop->index, 5) * 0.06 }}s">
+                         data-reveal data-reveal-delay="{{ min($loop->index, 5) * 0.06 }}">
                     @if ($artwork = $pillar->artwork())
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                             style="background-image: url('{{ $artwork }}')" aria-hidden="true"></div>
+                            data-background-image="{{ $artwork }}" aria-hidden="true"></div>
                         <div class="absolute inset-0 bg-linear-to-t from-dark-navy via-dark-navy/90 to-dark-navy/60" aria-hidden="true"></div>
                     @else
                         <div class="absolute inset-0 bg-white/5 backdrop-blur-md" aria-hidden="true"></div>
                     @endif
 
                     <div class="relative p-6">
-                    <div class="text-2xl">{{ $pillar->icon ?? '⚡' }}</div>
+                    <div class="text-fresh-green">@include('partials.feature-icon', ['index' => $loop->index, 'class' => 'h-6 w-6'])</div>
                     <h3 class="gx-card-title mt-4 text-lg font-medium text-white">{{ $pillar->title }}</h3>
                     <p class="mt-2 text-sm text-white/75">{{ $lead }}</p>
 
