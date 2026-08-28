@@ -5,11 +5,10 @@
 @section('content')
     {{-- FR-15 --}}
     <section class="mx-auto max-w-6xl px-4 py-20">
-        <h1 class="font-display text-4xl font-bold text-white">Smart Green City</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">
-            An enhanced, futuristic version of the {{ config('greenexe.event.university') }} environment, where a green
-            campus becomes a connected, efficient and intelligent city.
-        </p>
+        <x-page-header
+            eyebrow="The vision"
+            title="Smart Green City"
+            :description="'An enhanced, futuristic version of the '.config('greenexe.event.university').' environment, where a green campus becomes a connected, efficient and intelligent city.'" />
 
         <div class="mt-12 grid gap-6 md:grid-cols-2">
             @forelse ($vision as $item)
@@ -36,10 +35,23 @@
                     // Stored as a lead sentence followed by one point per line.
                     $lines = preg_split('/\R+/', trim($pillar->description));
                     $lead = array_shift($lines);
+                    $pillarIcons = [
+                        '<path d="M12 3v18M4 7h16M6 7l-2 5h4L6 7Zm12 0-2 5h4l-2-5ZM8 21h8M8 17h8"/>',
+                        '<path d="M4 6h16M4 12h16M4 18h16M7 3v18M17 3v18"/>',
+                        '<path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6M12 4v3"/>',
+                        '<path d="M4 19V5M4 5c4-3 8 3 16 0v14c-8 3-12-3-16 0ZM8 9h8M8 13h5"/>',
+                        '<path d="M12 3v18M5 7h14M7 7l-2 5h4L7 7Zm10 0-2 5h4l-2-5ZM8 17h8"/>',
+                        '<path d="M4 18h16M6 18V9h12v9M4 9h16l-8-5-8 5ZM9 13h6"/>',
+                    ];
+                    $pillarIcon = $pillarIcons[$loop->index % count($pillarIcons)];
                 @endphp
 
-                <article class="gx-card transition hover:border-cyan-tech/40">
-                    <div class="text-2xl">{{ $pillar->icon ?? '⚡' }}</div>
+                <article class="gx-card inner-liquid-card transition hover:border-cyan-tech/40">
+                    <div class="inner-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            {!! $pillarIcon !!}
+                        </svg>
+                    </div>
                     <h3 class="mt-4 font-display text-lg font-semibold text-white">{{ $pillar->title }}</h3>
                     <p class="mt-2 text-sm text-light-gray/70">{{ $lead }}</p>
 

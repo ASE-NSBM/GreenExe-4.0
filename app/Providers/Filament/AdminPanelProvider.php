@@ -40,7 +40,9 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
             ])
             ->brandName(config('greenexe.event.name').' admin')
-            ->favicon(asset('favicon.ico'))
+            ->brandLogo(asset('assets/img/logo-bgremoved.png'))
+            ->brandLogoHeight('2rem')
+            ->favicon(asset('assets/img/logo-bgremoved.png'))
             ->navigationGroups([
                 'Content',
             ])

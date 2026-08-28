@@ -4,10 +4,10 @@
 
 @section('content')
     <section class="mx-auto max-w-5xl px-4 py-20">
-        <h1 class="font-display text-4xl font-bold text-white">Competition Information</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">
-            Everything you need to know before registering your team and project.
-        </p>
+        <x-page-header
+            eyebrow="The competition"
+            title="Competition Information"
+            description="Everything you need to know before registering your team and project." />
 
         <div class="mt-12 space-y-10">
             @forelse ($sections as $section => $items)

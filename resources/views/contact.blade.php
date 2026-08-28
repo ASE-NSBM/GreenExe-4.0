@@ -4,11 +4,10 @@
 
 @section('content')
     <section class="mx-auto max-w-3xl px-4 py-20">
-        <h1 class="font-display text-4xl font-bold text-white">Contact</h1>
-        <p class="mt-4 text-lg text-light-gray/75">
-            Reach the {{ config('greenexe.event.organizer') }} team for anything about
-            {{ config('greenexe.event.name') }}.
-        </p>
+        <x-page-header
+            eyebrow="Get in touch"
+            title="Contact"
+            :description="'Reach the '.config('greenexe.event.organizer').' team for anything about '.config('greenexe.event.name').'.'" />
 
         <div class="mt-10 gx-card space-y-4 text-light-gray/75">
             <p><span class="text-white">Email:</span>

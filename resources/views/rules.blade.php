@@ -5,10 +5,10 @@
 @section('content')
     <section class="mx-auto max-w-5xl px-4 py-20">
         {{-- FR-44 to FR-48 --}}
-        <h1 class="font-display text-4xl font-bold text-white">Rules &amp; Eligibility</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">
-            Final competition rules are confirmed by the organisers before registration opens.
-        </p>
+        <x-page-header
+            eyebrow="Before you build"
+            title="Rules &amp; Eligibility"
+            description="Final competition rules are confirmed by the organisers before registration opens." />
 
         @php
             $labels = [

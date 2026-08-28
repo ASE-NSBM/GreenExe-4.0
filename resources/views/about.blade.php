@@ -5,8 +5,10 @@
 @section('content')
     <section class="mx-auto max-w-5xl px-4 py-20">
         {{-- FR-8, FR-9 --}}
-        <h1 class="font-display text-4xl font-bold text-white">About {{ config('greenexe.event.name') }}</h1>
-        <p class="mt-4 max-w-3xl text-lg text-light-gray/75">{{ config('greenexe.event.tagline') }}</p>
+        <x-page-header
+            eyebrow="About the event"
+            :title="'About '.config('greenexe.event.name')"
+            :description="config('greenexe.event.tagline')" />
 
         <div class="mt-12 space-y-6">
             @forelse ($sections->flatten() as $section)
@@ -37,7 +39,7 @@
 
         {{-- FR-11, FR-12 --}}
         <div class="mt-6 grid gap-6 md:grid-cols-2">
-            <div class="gx-card">
+            <div class="gx-card inner-liquid-card">
                 <h2 class="font-display text-xl font-semibold text-white">Eligibility &amp; rules</h2>
                 <p class="mt-3 text-light-gray/75">
                     Eligibility, team requirements and participation rules are listed in full on the rules page.
@@ -46,7 +48,7 @@
             </div>
 
             {{-- FR-13 --}}
-            <div class="gx-card">
+            <div class="gx-card inner-liquid-card">
                 <h2 class="font-display text-xl font-semibold text-white">Participant benefits</h2>
                 <ul class="mt-3 space-y-2 text-light-gray/75">
                     <li>• Industry exposure and mentorship opportunities</li>

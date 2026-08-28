@@ -22,13 +22,13 @@ return [
     ],
 
     'contact' => [
-        'email' => env('GREENEXE_CONTACT_EMAIL', 'greenexe@ase.example'),
-        'phone' => env('GREENEXE_CONTACT_PHONE', '+94 00 000 0000'),
+        'email' => env('GREENEXE_CONTACT_EMAIL', 'ase@nsbm.ac.lk'),
+        'phone' => env('GREENEXE_CONTACT_PHONE', '+94 71 872 9888'),
         'address' => 'NSBM Green University, Mahenwatta, Pitipana, Homagama, Sri Lanka',
         'socials' => [
-            'facebook' => env('GREENEXE_FACEBOOK_URL', '#'),
-            'instagram' => env('GREENEXE_INSTAGRAM_URL', '#'),
-            'linkedin' => env('GREENEXE_LINKEDIN_URL', '#'),
+            'facebook' => env('GREENEXE_FACEBOOK_URL', 'https://www.facebook.com/ase.nsbm/'),
+            'instagram' => env('GREENEXE_INSTAGRAM_URL', 'https://www.instagram.com/ase.nsbm/'),
+            'linkedin' => env('GREENEXE_LINKEDIN_URL', 'https://www.linkedin.com/company/asensbm'),
         ],
     ],
 

@@ -4,11 +4,10 @@
 
 @section('content')
     <section class="mx-auto max-w-4xl px-4 py-16">
-        <h1 class="font-display text-4xl font-bold text-white">Team &amp; Project Registration</h1>
-        <p class="mt-3 text-light-gray/75">
-            All fields marked <span class="text-red-300">*</span> are required. Your information is only visible to the
-            {{ config('greenexe.event.name') }} organisers.
-        </p>
+        <x-page-header
+            eyebrow="Enter the challenge"
+            title="Team &amp; Project Registration"
+            :description="'All fields are required. Your information is only visible to the '.config('greenexe.event.name').' organisers.'" />
 
         {{-- Progress indicator (SRS 9.5) --}}
         <ol class="mt-10 flex flex-wrap items-center gap-3 text-sm" aria-label="Registration steps">

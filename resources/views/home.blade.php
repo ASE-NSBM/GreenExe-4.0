@@ -7,7 +7,7 @@
 @section('content')
     {{-- Each panel is pinned to the top of the viewport, so the next one slides
          up and takes it over. Panels are opaque for that reason. --}}
-    <div class="gx-stack">
+    <div class="gx-stack home-shell">
         {{-- Snap stops, kept off the pinned panels themselves. --}}
         {{-- One stop per pinned panel. The closing panel is taller than the
              viewport and carries its own snap alignment. --}}
@@ -18,11 +18,11 @@
         </div>
 
     {{-- Hero (FR-1, FR-2, FR-3, FR-5) --}}
-    <section class="gx-panel relative w-full overflow-hidden bg-black tracking-[-0.02em]"
+    <section class="gx-panel home-hero relative w-full overflow-hidden bg-black tracking-[-0.02em]"
              data-hero>
 
         {{-- 1. Base plate --}}
-        <div class="hero-zoom absolute inset-0 z-10 bg-cover bg-center bg-no-repeat"
+        <div class="hero-zoom absolute inset-0 z-10 bg-cover bg-center bg-no-repeat opacity-55"
              style="background-image: url('{{ asset('assets/img/bg1.jpeg') }}')"
              aria-hidden="true"></div>
 
@@ -32,24 +32,25 @@
              style="background-image: url('{{ asset('assets/img/bg2.jpeg') }}')"
              aria-hidden="true"
              data-hero-reveal></div>
+            <div class="home-hero-shade absolute inset-0 z-20" aria-hidden="true"></div>
 
         {{-- 3. Headline --}}
         <div class="pointer-events-none absolute top-[14%] left-0 right-0 z-50 flex flex-col items-center px-5 text-center">
-            <p class="hero-anim hero-fade mb-4 text-xs font-medium uppercase tracking-[0.35em] text-white/70 sm:text-sm"
+            <p class="hero-anim hero-fade mb-4 text-xs font-medium uppercase tracking-[0.35em] text-fresh-green sm:text-sm"
                style="animation-delay: 0.1s">
                 {{ config('greenexe.event.name') }}
             </p>
 
             <h1 class="leading-[0.95] text-white">
-                <span class="hero-anim hero-reveal block font-playfair text-5xl font-normal italic sm:text-7xl md:text-8xl"
+                <span class="hero-anim hero-reveal block font-playfair text-5xl font-normal italic text-white sm:text-7xl md:text-8xl"
                       style="letter-spacing: -0.05em; animation-delay: 0.25s">Build the</span>
-                <span class="hero-anim hero-reveal -mt-1 block text-5xl font-normal sm:text-7xl md:text-8xl"
+                <span class="hero-anim hero-reveal -mt-1 block text-5xl font-normal text-fresh-green sm:text-7xl md:text-8xl"
                       style="letter-spacing: -0.08em; animation-delay: 0.42s">{{ config('greenexe.event.concept') }}</span>
             </h1>
         </div>
 
         {{-- 4. Bottom-left copy --}}
-        <div class="hero-anim hero-fade absolute bottom-14 left-10 z-50 hidden max-w-[260px] sm:block md:left-14"
+        <div class="hero-anim hero-fade home-glass-note absolute bottom-14 left-10 z-50 hidden max-w-[260px] sm:block md:left-14"
              style="animation-delay: 0.7s">
             <p class="text-sm leading-relaxed text-white/80">
                 An enhanced smart-city experience inspired by {{ config('greenexe.event.university') }}, where green
@@ -58,7 +59,7 @@
         </div>
 
         {{-- 5. Bottom-right copy and call to action --}}
-        <div class="hero-anim hero-fade absolute bottom-10 left-5 right-5 z-50 flex max-w-full flex-col items-start gap-4 sm:bottom-24 sm:left-auto sm:right-10 sm:max-w-[260px] sm:gap-5 md:right-14"
+        <div class="hero-anim hero-fade home-glass-note absolute bottom-10 left-5 right-5 z-50 flex max-w-full flex-col items-start gap-4 sm:bottom-24 sm:left-auto sm:right-10 sm:max-w-[260px] sm:gap-5 md:right-14"
              style="animation-delay: 0.85s">
             <p class="text-xs leading-relaxed text-white/80 sm:text-sm">
                 Teams of {{ config('greenexe.team.min_members') }}–{{ config('greenexe.team.max_members') }} students
@@ -66,8 +67,11 @@
                 Organised by the {{ config('greenexe.event.organizer') }}.
             </p>
             <a href="{{ route('register') }}"
-               class="rounded-full bg-[#e8702a] px-7 py-3 text-sm font-medium text-white transition-all hover:scale-[1.03] hover:bg-[#d2611f] hover:shadow-lg hover:shadow-[#e8702a]/30 active:scale-95">
+                   class="home-liquid-btn group">
                 Register Now
+                <span class="home-liquid-btn-arrow" aria-hidden="true">
+                    <span class="transition-transform duration-300 group-hover:translate-x-0.5">&rarr;</span>
+                </span>
             </a>
         </div>
     </section>
@@ -103,15 +107,15 @@
         ];
     @endphp
 
-    <section class="gx-panel relative flex w-full flex-col overflow-hidden bg-dark-navy tracking-[-0.02em]">
+    <section class="gx-panel home-section relative flex w-full flex-col overflow-hidden bg-dark-navy tracking-[-0.02em]">
         <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
              style="background-image: url('{{ asset('assets/img/section2.jpg') }}')"
              aria-hidden="true"></div>
 
         {{-- Two crossed gradients read as a photographic vignette: the copy side
              stays dark enough for white text while the sculpture keeps its sky. --}}
-        <div class="absolute inset-0 bg-gradient-to-r from-dark-navy via-dark-navy/85 to-dark-navy/45" aria-hidden="true"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-dark-navy via-dark-navy/25 to-dark-navy/75" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-dark-navy/95 via-dark-navy/90 to-dark-navy/70" aria-hidden="true"></div>
+        <div class="absolute inset-0 home-section-glow" aria-hidden="true"></div>
 
         <div class="relative flex w-full flex-1 items-center px-6 pt-24 pb-12 sm:px-10 md:px-14 md:pt-28">
             <div class="grid w-full gap-10 md:grid-cols-12 md:gap-14">
@@ -151,7 +155,7 @@
                             $lines = preg_split('/\R+/', trim($body));
                         @endphp
 
-                        <article class="gx-reveal group relative border-t border-white/15 py-5 first:border-t-0 first:pt-0 md:py-7 md:first:pt-0"
+                        <article class="gx-reveal home-index-card group relative border-t border-white/15 py-5 first:border-t-0 first:pt-0 md:py-7 md:first:pt-0"
                                  data-reveal style="transition-delay: {{ 0.1 * ($index + 1) }}s">
                             {{-- Hairline that draws itself in on hover. --}}
                             <span class="absolute left-0 top-0 h-px w-0 bg-gradient-to-r from-cyan-tech to-transparent transition-all duration-700 group-hover:w-full"

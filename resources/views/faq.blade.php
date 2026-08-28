@@ -5,8 +5,10 @@
 @section('content')
     <section class="mx-auto max-w-4xl px-4 py-20">
         {{-- FR-53, FR-54 --}}
-        <h1 class="font-display text-4xl font-bold text-white">Frequently Asked Questions</h1>
-        <p class="mt-4 text-lg text-light-gray/75">Common questions from {{ config('greenexe.event.name') }} participants.</p>
+        <x-page-header
+            eyebrow="Need help"
+            title="Frequently Asked Questions"
+            :description="'Common questions from '.config('greenexe.event.name').' participants.'" />
 
         <div class="mt-10 space-y-3" data-accordion>
             @forelse ($faqs as $faq)
