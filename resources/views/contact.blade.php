@@ -18,9 +18,9 @@
         'center' => true,
     ])
 
-    <section class="gx-section mx-auto max-w-4xl px-6 pb-24">
+    <section class="gx-section px-6 pb-24">
 
-        <div class="mt-12 grid gap-4 sm:grid-cols-3">
+        <div class="mx-auto mt-12 max-w-4xl grid gap-4 sm:grid-cols-3">
             @php
                 $cards = [
                     ['label' => 'Email us', 'value' => $contact['email'], 'href' => 'mailto:'.$contact['email'],
@@ -44,12 +44,67 @@
             @endforeach
         </div>
 
-        <div class="gx-reveal mt-6 gx-card text-center" data-reveal>
+        <div class="gx-reveal mx-auto mt-6 max-w-4xl gx-card text-center" data-reveal>
             <p class="text-light-gray/70">Full address</p>
             <p class="mt-1 text-white">{{ $contact['address'] }}</p>
         </div>
 
-        <div class="gx-reveal mt-10 text-center" data-reveal>
+        {{-- Organizing Committee Section --}}
+        <div class="gx-reveal mx-auto mt-16 max-w-5xl" data-reveal>
+            <div class="text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-tech">Leadership</p>
+                <h2 class="mt-4 font-display text-2xl font-bold text-white">Organizing Committee</h2>
+            </div>
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ($committee as $member)
+                    <div class="gx-card inner-liquid-card text-center">
+                        <div class="mx-auto aspect-square w-40 overflow-hidden rounded-full border-2 border-cyan-tech/30 bg-dark-navy/50 sm:w-44 md:w-48">
+                            @if ($member['image'])
+                                <img src="{{ asset($member['image']) }}" alt="{{ $member['name'] }}" class="h-full w-full object-cover object-center">
+                            @else
+                                <div class="grid h-full w-full place-items-center bg-gradient-to-br from-cyan-tech/20 to-fresh-green/20">
+                                    <span class="text-2xl text-cyan-tech">{{ substr($member['name'], 0, 1) }}</span>
+                                </div>
+                            @endif
+                        </div>
+                        <p class="mt-4 font-medium text-white">{{ $member['name'] }}</p>
+                        <p class="mt-1 text-sm text-cyan-tech">{{ $member['role'] }}</p>
+                        @if (isset($member['email']))
+                            <a href="mailto:{{ $member['email'] }}" class="mt-3 inline-block text-xs text-light-gray/60 hover:text-light-gray transition">
+                                {{ $member['email'] }}
+                            </a>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Development Team Section --}}
+        <div class="gx-reveal mx-auto mt-16 max-w-5xl" data-reveal>
+            <div class="text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-fresh-green">Support</p>
+                <h2 class="mt-4 font-display text-2xl font-bold text-white">Development Team</h2>
+            </div>
+            <div class="mt-8 grid justify-center gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                @foreach ($developmentTeam as $member)
+                    <div class="gx-card inner-liquid-card p-3 text-center">
+                        <div class="mx-auto aspect-square w-24 overflow-hidden rounded-full border-2 border-fresh-green/30 bg-dark-navy/50 sm:w-28 md:w-32 lg:w-28">
+                            @if ($member['image'])
+                                <img src="{{ asset($member['image']) }}" alt="{{ $member['name'] }}" class="h-full w-full object-cover object-center">
+                            @else
+                                <div class="grid h-full w-full place-items-center bg-gradient-to-br from-fresh-green/20 to-eco-lime/20">
+                                    <span class="text-2xl text-fresh-green">{{ substr($member['name'], 0, 1) }}</span>
+                                </div>
+                            @endif
+                        </div>
+                        <p class="mt-3 text-sm font-medium text-white">{{ $member['name'] }}</p>
+                        <p class="mt-1 text-[11px] leading-snug text-fresh-green">{{ $member['role'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="gx-reveal mx-auto mt-10 max-w-4xl text-center" data-reveal>
             <h2 class="gx-card-title text-xl font-medium text-white">Follow {{ $org['short_name'] }}</h2>
             <p class="mt-2 text-sm text-light-gray/60">Events, workshops and announcements as they happen.</p>
             <div class="mt-5 flex justify-center">

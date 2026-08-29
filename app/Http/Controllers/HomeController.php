@@ -50,6 +50,9 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return view('contact');
+        return view('contact', [
+            'committee' => config('greenexe.committee'),
+            'developmentTeam' => config('greenexe.development_team'),
+        ]);
     }
 }

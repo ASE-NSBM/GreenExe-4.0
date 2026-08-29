@@ -79,4 +79,64 @@ return [
         'other' => 'Other Sustainable Innovation',
     ],
 
+    'committee' => [
+        [
+            'name' => 'Samsudeen Ashad',
+            'role' => 'President',
+            'email' => 'samsudeenashad@gmail.com',
+            'image' => '/team/ashad.jpg',
+        ],
+        [
+            'name' => 'Nethum Bashitha',
+            'role' => 'Vice President',
+            'email' => 'bashithanethum4@gmail.com',
+            'image' => '/team/nethum.jpg',
+        ],
+        [
+            'name' => 'Dilara Wickramanayake',
+            'role' => 'Vice President',
+            'email' => 'dilarawickramanayake@gmail.com',
+            'image' => '/team/dilara.jpg',
+        ],
+        [
+            'name' => 'Hirushi Nethmini',
+            'role' => 'Secretary',
+            'email' => 'hirushinethmini5@gmail.com',
+            'image' => '/team/hirushi.jpeg',
+        ],
+    ],
+
+    'development_team' => [
+        [
+            'name' => 'Samsudeen Ashad',
+            'role' => 'President',
+            'image' => '/team/ashad.jpg',
+        ],
+        [
+            'name' => 'Rashmika Fernando',
+            'role' => 'Chief Technical Affairs & Organizing Lead',
+            'image' => '/team/rashmika.jpg',
+        ],
+        [
+            'name' => 'Zenith Ivan',
+            'role' => 'Development Lead — Powerteam',
+            'image' => '/team/zenith.jpg',
+        ],
+        [
+            'name' => 'Himath Bandara',
+            'role' => 'Development Lead — 24 Batch',
+            'image' => '/team/himath.jpg',
+        ],
+        [
+            'name' => 'Shamika Keshan',
+            'role' => 'Development Lead — 25 Batch',
+            'image' => '/team/keshan.jpg',
+        ],
+        [
+            'name' => 'Ramiru Wanigathunga',
+            'role' => 'Development Lead — 26 Batch',
+            'image' => '/team/ramiru.jpg',
+        ],
+    ],
+
 ];
