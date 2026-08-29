@@ -2,6 +2,7 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
 
 /*
 | Smart Green City palette and typography (SRS 9.3 / 9.4).

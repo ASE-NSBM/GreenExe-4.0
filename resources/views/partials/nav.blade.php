@@ -7,6 +7,7 @@
         ['route' => 'rules', 'label' => 'Rules'],
         ['route' => 'faq', 'label' => 'FAQ'],
         ['route' => 'organizer', 'label' => 'Organizer'],
+        ['route' => 'contact', 'label' => 'Contact'],
     ];
 
     // The floating glassmorphic navigation bar is used consistently across pages.
