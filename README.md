@@ -150,6 +150,21 @@ php artisan test
 Covers registration success and validation paths, duplicate handling, admin auth
 and authorisation, search/filter, status updates, CSV export, and every public page.
 
+## CI/CD
+
+GitHub Actions runs Composer validation, PHP formatting checks, the Vite production
+build, and the Laravel test suite for every pull request into `main` and every push
+to `production` or `main`. The workflow is defined in `.github/workflows/ci.yml`.
+
+Production deployment uses the repository's existing Railway GitHub integration.
+In the `GreenExe-4.0` service settings, enable **Wait for CI** while keeping
+autodeploy enabled for `main`. Railway will then hold each deployment until the
+GitHub `Test and build` check succeeds, and skip deployment when CI fails. No
+Railway access token needs to be stored in GitHub.
+
+Railway also reads `railway.json`, which selects Railpack and requires the Laravel
+`/up` health check to succeed before a release is considered healthy.
+
 ## Before production
 
 Confirm with the organisers (SRS 18): official branding, team-size limits,
