@@ -36,7 +36,6 @@ return [
         ],
     ],
 
-
     'organizer' => [
         'short_name' => 'ASE',
         'name' => 'Association of Software Engineering',
