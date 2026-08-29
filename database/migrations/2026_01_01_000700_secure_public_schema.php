@@ -54,13 +54,15 @@ return new class extends Migration
             return;
         }
 
-        DB::statement('REVOKE ALL ON ALL TABLES IN SCHEMA public FROM anon, authenticated');
-        DB::statement('REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM anon, authenticated');
-        DB::statement('REVOKE USAGE ON SCHEMA public FROM anon, authenticated');
+        foreach ($this->supabaseRoles() as $role) {
+            DB::statement("REVOKE ALL ON ALL TABLES IN SCHEMA public FROM {$role}");
+            DB::statement("REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM {$role}");
+            DB::statement("REVOKE USAGE ON SCHEMA public FROM {$role}");
 
-        // Anything created later starts closed as well.
-        DB::statement('ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM anon, authenticated');
-        DB::statement('ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON SEQUENCES FROM anon, authenticated');
+            // Anything created later starts closed as well.
+            DB::statement("ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM {$role}");
+            DB::statement("ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON SEQUENCES FROM {$role}");
+        }
 
         foreach ($this->tables as $table) {
             if (Schema::hasTable($table)) {
@@ -83,10 +85,28 @@ return new class extends Migration
 
         // Restores Supabase's stock posture. Only reverse this if you actually
         // intend the data API to reach these tables again.
-        DB::statement('GRANT USAGE ON SCHEMA public TO anon, authenticated');
-        DB::statement('GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated');
-        DB::statement('GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated');
-        DB::statement('ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated');
-        DB::statement('ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated');
+        foreach ($this->supabaseRoles() as $role) {
+            DB::statement("GRANT USAGE ON SCHEMA public TO {$role}");
+            DB::statement("GRANT ALL ON ALL TABLES IN SCHEMA public TO {$role}");
+            DB::statement("GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO {$role}");
+            DB::statement("ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO {$role}");
+            DB::statement("ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO {$role}");
+        }
+    }
+
+    /**
+     * Return only the Supabase roles present on this PostgreSQL server.
+     *
+     * @return list<string>
+     */
+    private function supabaseRoles(): array
+    {
+        return array_values(array_filter(
+            ['anon', 'authenticated'],
+            fn (string $role): bool => (bool) DB::scalar(
+                'SELECT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = ?)',
+                [$role],
+            ),
+        ));
     }
 };
