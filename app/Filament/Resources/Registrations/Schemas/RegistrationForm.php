@@ -6,6 +6,7 @@ use App\Models\Registration;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -114,6 +115,17 @@ class RegistrationForm
                         ->required()
                         ->minLength(30)
                         ->maxLength(2000)
+                        ->rows(3)
+                        ->columnSpanFull(),
+
+                    Toggle::make('has_previous_hackathon_experience')
+                        ->label('Previously entered in another hackathon?')
+                        ->helperText('Turn on for Yes; leave off for No.'),
+
+                    Textarea::make('previous_hackathon_details')
+                        ->label('Previous participation, placements, awards or wins')
+                        ->helperText('Include the event, year, placement, award, win, or other result.')
+                        ->maxLength(1000)
                         ->rows(3)
                         ->columnSpanFull(),
                 ]),

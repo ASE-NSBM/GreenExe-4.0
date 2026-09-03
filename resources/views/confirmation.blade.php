@@ -77,6 +77,16 @@
                         <dt class="text-light-gray/60">Description</dt>
                         <dd class="text-light-gray/80">{{ Str::limit($registration->project_description, 400) }}</dd>
                     </div>
+                    <div>
+                        <dt class="text-light-gray/60">Previous hackathon participation</dt>
+                        <dd class="text-light-gray">{{ $registration->has_previous_hackathon_experience ? 'Yes' : 'No' }}</dd>
+                    </div>
+                    @if ($registration->previous_hackathon_details)
+                        <div>
+                            <dt class="text-light-gray/60">Placements, awards, wins or other results</dt>
+                            <dd class="text-light-gray/80">{{ $registration->previous_hackathon_details }}</dd>
+                        </div>
+                    @endif
                 </dl>
             </article>
         </div>

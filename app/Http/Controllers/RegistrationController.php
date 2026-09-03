@@ -35,6 +35,8 @@ class RegistrationController extends Controller
 
         try {
             $registration = DB::transaction(function () use ($data) {
+                $hasPreviousExperience = (bool) $data['has_previous_hackathon_experience'];
+
                 $registration = Registration::create([
                     'registration_code' => Registration::generateCode(),
                     'team_name' => $data['team_name'],
@@ -47,6 +49,10 @@ class RegistrationController extends Controller
                     'technology_used' => $data['technology_used'],
                     'innovation_description' => $data['innovation_description'],
                     'expected_impact' => $data['expected_impact'],
+                    'has_previous_hackathon_experience' => $hasPreviousExperience,
+                    'previous_hackathon_details' => $hasPreviousExperience
+                        ? $data['previous_hackathon_details']
+                        : null,
                     'status' => 'pending',
                 ]);
 

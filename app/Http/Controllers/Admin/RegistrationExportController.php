@@ -22,6 +22,7 @@ class RegistrationExportController extends Controller
 
         $columns = [
             'registration_code', 'team_name', 'member_count', 'project_title', 'project_category',
+            'previous_hackathon_participation', 'previous_hackathon_details',
             'status', 'submitted_at', 'member_role', 'full_name', 'student_id', 'email',
             'contact_number', 'whatsapp_number', 'institution',
         ];
@@ -44,6 +45,8 @@ class RegistrationExportController extends Controller
                                 $registration->member_count,
                                 $registration->project_title,
                                 $registration->project_category,
+                                $registration->has_previous_hackathon_experience ? 'yes' : 'no',
+                                $registration->previous_hackathon_details,
                                 $registration->status,
                                 $registration->created_at?->toDateTimeString(),
                                 $member->is_leader ? 'leader' : 'member',

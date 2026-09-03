@@ -24,6 +24,7 @@ class RegistrationTest extends TestCase
             'technology_used' => 'Laravel, ESP32, LoRa, PostgreSQL',
             'innovation_description' => 'Zone-level prediction instead of simple motion triggers, tuned per building.',
             'expected_impact' => 'Cuts outdoor lighting energy use substantially without reducing safety.',
+            'has_previous_hackathon_experience' => '0',
             'declaration' => '1',
             'members' => [],
         ];
@@ -60,11 +61,38 @@ class RegistrationTest extends TestCase
         $this->assertSame('Green Circuit', $registration->team_name);
         $this->assertCount(2, $registration->members);
         $this->assertTrue($registration->members->first()->is_leader);
+        $this->assertFalse($registration->has_previous_hackathon_experience);
+        $this->assertNull($registration->previous_hackathon_details);
         $this->assertMatchesRegularExpression('/^GX4-\d{2}-[A-Z0-9]{6}$/', $registration->registration_code);
 
         $this->get(route('registration.success'))
             ->assertOk()
             ->assertSee($registration->registration_code);
+    }
+
+    public function test_previous_hackathon_participation_and_placement_are_stored(): void
+    {
+        $payload = $this->validPayload();
+        $payload['has_previous_hackathon_experience'] = '1';
+        $payload['previous_hackathon_details'] = 'HackX 2025 — second place in the sustainability category.';
+
+        $this->post(route('register.store'), $payload)
+            ->assertRedirect(route('registration.success'));
+
+        $registration = Registration::firstOrFail();
+        $this->assertTrue($registration->has_previous_hackathon_experience);
+        $this->assertSame($payload['previous_hackathon_details'], $registration->previous_hackathon_details);
+    }
+
+    public function test_previous_hackathon_details_are_required_when_yes_is_selected(): void
+    {
+        $payload = $this->validPayload();
+        $payload['has_previous_hackathon_experience'] = '1';
+
+        $this->post(route('register.store'), $payload)
+            ->assertSessionHasErrors('previous_hackathon_details');
+
+        $this->assertSame(0, Registration::count());
     }
 
     public function test_incomplete_submission_is_rejected(): void
