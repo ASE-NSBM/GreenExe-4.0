@@ -204,6 +204,32 @@
                     @error($field) <p class="gx-error">{{ $message }}</p> @enderror
                 </div>
             @endforeach
+
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label class="gx-label" for="has_previous_hackathon_experience">
+                        Has this project participated in another hackathon? <span class="text-red-300">*</span>
+                    </label>
+                    <select id="has_previous_hackathon_experience" name="has_previous_hackathon_experience"
+                            class="gx-input" required>
+                        <option value="">Select an answer</option>
+                        <option value="0" @selected(old('has_previous_hackathon_experience') === '0')>No</option>
+                        <option value="1" @selected(old('has_previous_hackathon_experience') === '1')>Yes</option>
+                    </select>
+                    @error('has_previous_hackathon_experience') <p class="gx-error">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="gx-label" for="previous_hackathon_details">
+                        Previous participation, placements, awards or wins
+                    </label>
+                    <textarea id="previous_hackathon_details" name="previous_hackathon_details" rows="4"
+                              maxlength="1000" class="gx-input"
+                              placeholder="If yes, list the hackathon name, year, placement, award, win, or other result.">{{ old('previous_hackathon_details') }}</textarea>
+                    <p class="mt-2 text-xs text-light-gray/50">Required when you select Yes.</p>
+                    @error('previous_hackathon_details') <p class="gx-error">{{ $message }}</p> @enderror
+                </div>
+            </div>
         </div>
     </fieldset>
 

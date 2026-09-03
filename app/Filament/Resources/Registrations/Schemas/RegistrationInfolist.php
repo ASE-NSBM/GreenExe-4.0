@@ -52,6 +52,15 @@ class RegistrationInfolist
                     TextEntry::make('technology_used')->label('Technology used')->columnSpanFull(),
                     TextEntry::make('innovation_description')->label('Innovation')->columnSpanFull(),
                     TextEntry::make('expected_impact')->label('Expected impact')->columnSpanFull(),
+                    TextEntry::make('has_previous_hackathon_experience')
+                        ->label('Previous hackathon participation')
+                        ->formatStateUsing(fn (bool $state): string => $state ? 'Yes' : 'No')
+                        ->badge()
+                        ->color(fn (bool $state): string => $state ? 'info' : 'gray'),
+                    TextEntry::make('previous_hackathon_details')
+                        ->label('Previous participation, placements, awards or wins')
+                        ->placeholder('Not applicable')
+                        ->columnSpanFull(),
                 ]),
         ]);
     }

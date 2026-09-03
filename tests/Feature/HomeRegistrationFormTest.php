@@ -83,6 +83,7 @@ class HomeRegistrationFormTest extends TestCase
             'technology_used' => 'Laravel, PostgreSQL, ESP32',
             'innovation_description' => str_repeat('Live per-block feedback loops. ', 2),
             'expected_impact' => str_repeat('Lower consumption across campus. ', 2),
+            'has_previous_hackathon_experience' => '0',
             'declaration' => '1',
         ];
     }

@@ -36,6 +36,14 @@ class StoreRegistrationRequest extends FormRequest
             'technology_used' => ['required', 'string', 'min:3', 'max:1000'],
             'innovation_description' => ['required', 'string', 'min:30', 'max:2000'],
             'expected_impact' => ['required', 'string', 'min:30', 'max:2000'],
+            'has_previous_hackathon_experience' => ['required', 'boolean'],
+            'previous_hackathon_details' => [
+                'nullable',
+                'required_if:has_previous_hackathon_experience,1',
+                'string',
+                'min:3',
+                'max:1000',
+            ],
 
             'members' => ['required', 'array', "min:{$min}", "max:{$max}"],
             'members.*.full_name' => ['required', 'string', 'min:3', 'max:120'],
@@ -57,6 +65,7 @@ class StoreRegistrationRequest extends FormRequest
         return [
             'members.*.contact_number.regex' => 'Enter a valid 10-digit contact number starting with 07.',
             'members.*.whatsapp_number.regex' => 'Enter a valid 10-digit whatsapp number starting with 07.',
+            'previous_hackathon_details.required_if' => 'List the previous hackathon, year, and any placement, award, or result.',
             'declaration.accepted' => 'You must accept the competition rules and declaration before submitting.',
         ];
     }
@@ -73,6 +82,8 @@ class StoreRegistrationRequest extends FormRequest
             'members.*.contact_number' => 'contact number',
             'members.*.whatsapp_number' => 'WhatsApp number',
             'members.*.institution' => 'institution',
+            'has_previous_hackathon_experience' => 'previous hackathon participation',
+            'previous_hackathon_details' => 'previous hackathon details',
         ];
     }
 

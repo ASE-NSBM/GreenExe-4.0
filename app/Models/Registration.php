@@ -25,6 +25,8 @@ class Registration extends Model
         'technology_used',
         'innovation_description',
         'expected_impact',
+        'has_previous_hackathon_experience',
+        'previous_hackathon_details',
         'status',
     ];
 
@@ -32,6 +34,7 @@ class Registration extends Model
     {
         return [
             'member_count' => 'integer',
+            'has_previous_hackathon_experience' => 'boolean',
         ];
     }
 
@@ -76,6 +79,7 @@ class Registration extends Model
             $q->where('registration_code', $like, "%{$term}%")
                 ->orWhere('team_name', $like, "%{$term}%")
                 ->orWhere('project_title', $like, "%{$term}%")
+                ->orWhere('previous_hackathon_details', $like, "%{$term}%")
                 ->orWhereHas('members', function ($m) use ($term, $like) {
                     $m->where('full_name', $like, "%{$term}%")
                         ->orWhere('email', $like, "%{$term}%")
