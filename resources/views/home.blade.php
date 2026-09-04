@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('meta_description', 'GreenExE 4.0 is an NSBM student technology competition where teams build Smart Green City solutions for sustainable, connected communities.')
+@section('meta_image', asset('assets/img/bg1.jpeg'))
+
 @section('title', config('greenexe.event.name').' — '.config('greenexe.event.concept'))
 
 @section('html_class', 'gx-stack-root')

@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://greenexe-4.asensbm.live/sitemap.xml

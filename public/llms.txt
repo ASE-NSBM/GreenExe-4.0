@@ -1,0 +1,19 @@
+# GreenExE 4.0
+
+GreenExE 4.0 is a student technology and innovation competition by the Association of Software Engineering (ASE) at NSBM Green University, Sri Lanka. Teams design technology solutions for a Smart Green City: connected, efficient, intelligent and sustainable environments.
+
+## Official information
+
+- Competition and registration: https://greenexe-4.asensbm.live/competition
+- Registration: https://greenexe-4.asensbm.live/register
+- Rules and eligibility: https://greenexe-4.asensbm.live/rules
+- Smart Green City concept: https://greenexe-4.asensbm.live/smart-city
+- Frequently asked questions: https://greenexe-4.asensbm.live/faq
+- Organizer: https://greenexe-4.asensbm.live/organizer
+- Contact: https://greenexe-4.asensbm.live/contact
+
+## Competition scope
+
+Teams of 2–5 students may propose Smart Green City solutions in smart energy, mobility, water and waste management, buildings and infrastructure, environmental monitoring, connected digital services, or other sustainable innovation.
+
+For final dates, eligibility details, requirements, and registration availability, use the official competition, rules, and registration pages above.

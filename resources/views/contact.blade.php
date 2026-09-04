@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Contact the GreenExE 4.0 organizing committee at the Association of Software Engineering, NSBM Green University.')
+
 @section('title', 'Contact — '.config('greenexe.event.name'))
 
 @php

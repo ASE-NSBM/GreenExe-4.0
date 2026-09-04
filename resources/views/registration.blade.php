@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Register your student team for GreenExE 4.0 and submit a Smart Green City technology project.')
+
 @section('title', 'Register — '.config('greenexe.event.name'))
 
 @section('content')

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Explore GreenExE 4.0, the Smart Green City technology competition by ASE at NSBM Green University for student innovation teams.')
+
 @section('title', 'Competition — '.config('greenexe.event.name'))
 
 @section('content')

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Read the official GreenExE 4.0 competition rules, project requirements, team requirements and eligibility information.')
+
 @section('title', 'Rules & Eligibility — '.config('greenexe.event.name'))
 
 @section('content')

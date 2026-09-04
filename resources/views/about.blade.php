@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Learn about GreenExE 4.0, a Smart Green City innovation competition inspired by NSBM Green University.')
+
 @section('title', 'About '.config('greenexe.event.name').' — '.config('greenexe.event.concept'))
 
 @section('content')
@@ -104,4 +106,3 @@
         </section>
     </div>
 @endsection
-

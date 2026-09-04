@@ -1,5 +1,28 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Find answers to common questions about GreenExE 4.0 registration, teams, Smart Green City projects, rules and eligibility.')
+
+@php
+    $faqSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => $faqs->map(fn ($faq) => [
+            '@type' => 'Question',
+            'name' => $faq->question,
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => trim(strip_tags($faq->answer)),
+            ],
+        ])->values(),
+    ];
+@endphp
+
+@push('structured_data')
+    @if ($faqs->isNotEmpty())
+        <script type="application/ld+json">@json($faqSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</script>
+    @endif
+@endpush
+
 @section('title', 'FAQ — '.config('greenexe.event.name'))
 
 @section('content')

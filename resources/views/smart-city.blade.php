@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('meta_description', 'Discover the Smart Green City concept behind GreenExE 4.0: sustainable infrastructure, connected services and student-built technology solutions.')
+
 @section('title', 'Smart Green City Concept — '.config('greenexe.event.name'))
 
 @section('content')

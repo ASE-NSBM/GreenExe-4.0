@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('robots', 'noindex,nofollow,noarchive')
+
 @section('title', 'Registration Confirmed — '.config('greenexe.event.name'))
 
 @section('content')
